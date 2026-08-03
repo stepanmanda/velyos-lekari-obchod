@@ -1,7 +1,7 @@
 import { readFile, writeFile, mkdir } from "node:fs/promises";
 import { resolve } from "node:path";
 
-const source = resolve("../outputs/kv-lekari-karlovarsky-kraj-2026-08-03/kv_lekari_nrpzs_raw_2026-08-03.csv");
+const source = resolve("../outputs/kv-lekari-karlovarsky-kraj-2026-08-03/kv_lekari_digitalni_audit_2026-08-03.csv");
 const destination = resolve("public/leads.json");
 
 function parseCsv(text) {
@@ -9,12 +9,12 @@ function parseCsv(text) {
   let row = [];
   let field = "";
   let quoted = false;
-  for (let i = 0; i < text.length; i += 1) {
-    const char = text[i];
+  for (let index = 0; index < text.length; index += 1) {
+    const char = text[index];
     if (char === '"') {
-      if (quoted && text[i + 1] === '"') {
+      if (quoted && text[index + 1] === '"') {
         field += '"';
-        i += 1;
+        index += 1;
       } else {
         quoted = !quoted;
       }
@@ -22,7 +22,7 @@ function parseCsv(text) {
       row.push(field);
       field = "";
     } else if ((char === "\n" || char === "\r") && !quoted) {
-      if (char === "\r" && text[i + 1] === "\n") i += 1;
+      if (char === "\r" && text[index + 1] === "\n") index += 1;
       row.push(field);
       if (row.some(Boolean)) rows.push(row);
       row = [];
@@ -39,54 +39,81 @@ function parseCsv(text) {
 }
 
 function cleanPhone(value = "") {
-  const compact = value.trim().replace(/\s+/g, " ");
-  return compact;
+  return value.trim().replace(/\s+/g, " ");
+}
+
+function number(value = "") {
+  const parsed = Number(value);
+  return Number.isFinite(parsed) ? parsed : 0;
+}
+
+function primarySpecialty(segments) {
+  if (segments.includes("VPL")) return "Praktik";
+  if (segments.includes("PLDD")) return "Pediatrie";
+  if (segments.includes("GYN")) return "Gynekologie";
+  return "Stomatologie";
 }
 
 const raw = (await readFile(source, "utf8")).replace(/^\uFEFF/, "");
 const [header, ...rows] = parseCsv(raw);
 const at = Object.fromEntries(header.map((name, index) => [name, index]));
-const specialtyByCode = {
-  "320": "Praktik",
-  "322": "Stomatologie",
-  "323": "Gynekologie",
-};
+const required = ["lead_id", "misto_id", "poskytovatel_nazev", "segmenty", "obchodni_skore_0_100", "priorita"];
+for (const column of required) {
+  if (at[column] === undefined) throw new Error(`Ve vstupu chybí povinný sloupec: ${column}`);
+}
 
 const seen = new Set();
-const leads = rows
-  .filter((row) => specialtyByCode[row[at.ZZ_druh_kod]])
-  .map((row) => {
-    const id = row[at.ZZ_misto_poskytovani_ID] || row[at.ZZ_ID];
-    const street = row[at.ZZ_ulice];
-    const number = row[at.ZZ_cislo_domovni_orientacni];
-    return {
-      id,
-      name: row[at.ZZ_nazev] || row[at.poskytovatel_nazev],
-      provider: row[at.poskytovatel_nazev] || row[at.ZZ_nazev],
-      specialty: specialtyByCode[row[at.ZZ_druh_kod]],
-      city: row[at.ZZ_obec],
-      district: row[at.ZZ_okres_nazev],
-      address: [street, number, row[at.ZZ_PSC], row[at.ZZ_obec]].filter(Boolean).join(" "),
-      phone: cleanPhone(row[at.poskytovatel_telefon]),
-      email: row[at.poskytovatel_email]?.trim() || "",
-      web: row[at.poskytovatel_web]?.trim() || "",
-      representative: row[at.poskytovatel_odborny_zastupce]?.replace(/\s+/g, " ").trim() || "",
-      status: "Nevoláno",
-      notes: "",
-      nextFollowUp: "",
-      meetingAt: "",
-      lastContact: "",
-      attempts: 0,
-      logs: [],
-    };
-  })
-  .filter((lead) => {
-    if (!lead.id || seen.has(lead.id)) return false;
-    seen.add(lead.id);
-    return true;
-  })
-  .sort((a, b) => a.city.localeCompare(b.city, "cs") || a.name.localeCompare(b.name, "cs"));
+const leads = rows.map((row) => {
+  const id = row[at.misto_id]?.trim();
+  if (!id) throw new Error("Řádek bez stabilního ID místa NRPZS");
+  if (seen.has(id)) throw new Error(`Duplicitní ID místa NRPZS: ${id}`);
+  seen.add(id);
+  const segments = row[at.segmenty].split("|").filter(Boolean);
+  return {
+    id,
+    sourceLeadId: row[at.lead_id],
+    providerIco: row[at.poskytovatel_ico],
+    name: row[at.zarizeni_nazev] || row[at.poskytovatel_nazev],
+    provider: row[at.poskytovatel_nazev] || row[at.zarizeni_nazev],
+    specialty: primarySpecialty(segments),
+    segments,
+    city: row[at.mesto],
+    district: row[at.okres],
+    address: [row[at.adresa], row[at.psc], row[at.mesto]].filter(Boolean).join(" "),
+    phone: cleanPhone(row[at.telefon]),
+    email: row[at.email]?.trim() || "",
+    web: row[at.web]?.trim() || "",
+    representative: row[at.odborny_zastupce]?.replace(/\s+/g, " ").trim() || "",
+    targetType: row[at.typ_cile] || "",
+    digitalScore: number(row[at.digitalni_skore_0_10]),
+    digitalStatus: row[at.digitalni_stav] || "",
+    webOpportunityScore: number(row[at.web_prilezitost_0_100]),
+    medvisionFitScore: number(row[at.medvision_fit_0_100]),
+    commercialScore: number(row[at.obchodni_skore_0_100]),
+    priority: row[at.priorita] || "C",
+    recommendedOffer: row[at.nabidka_doporucena] || "",
+    priorityReason: row[at.duvod_priority] || "",
+    recommendedNextStep: row[at.doporuceny_dalsi_krok] || "",
+    contactConfidence: row[at.kontakt_jistota] || "",
+    researchStatus: row[at.research_stav] || "",
+    acceptsNewPatients: row[at.prijima_nove_pacienty] || "Nedohledáno",
+    mapProfileUrl: row[at.mapy_firmy_url] || "",
+    googleMapsUrl: row[at.google_maps_hledani] || "",
+    auditedAt: row[at.overeno_dne] || "",
+    status: "Nevoláno",
+    notes: "",
+    nextFollowUp: "",
+    meetingAt: "",
+    lastContact: "",
+    attempts: 0,
+    logs: [],
+  };
+}).sort((a, b) => b.commercialScore - a.commercialScore || a.city.localeCompare(b.city, "cs") || a.name.localeCompare(b.name, "cs"));
+
+if (leads.length !== rows.length || seen.size !== rows.length) {
+  throw new Error(`Deduplikační kontrola selhala: ${rows.length} vstupů / ${leads.length} výstupů / ${seen.size} ID`);
+}
 
 await mkdir(resolve("public"), { recursive: true });
 await writeFile(destination, `${JSON.stringify(leads, null, 2)}\n`);
-console.log(`Připraveno ${leads.length} kontaktů → ${destination}`);
+console.log(`Připraveno ${leads.length} unikátních kontaktů → ${destination}`);

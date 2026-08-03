@@ -17,6 +17,17 @@ export const specialtyCopy: Record<Specialty, {
     ],
     medvision: "U praktiků navíc připravujeme MEDVISION — lokálního digitálního asistenta ordinace pro objednávání, příjem požadavků, připomínky a přehled dne. Citlivé zpracování běží přímo v ordinaci a člověk má vždy poslední slovo.",
   },
+  Pediatrie: {
+    hook: "Pomáháme dětským ordinacím zpřehlednit informace pro rodiče, aby rychle našli ordinační dobu, postup při akutních potížích, očkování i správný způsob kontaktu bez zbytečného telefonování.",
+    value: "Nový web sjednotí praktické informace pro rodiče, aktuality a bezpečné kontaktní cesty. Součástí je vlastní vizuální identita a brandbook, texty, grafika, mobilní verze, formulář, základní SEO a napojení na Google.",
+    questions: [
+      "Kvůli kterým informacím rodiče nejčastěji volají?",
+      "Najdou dnes snadno postup pro akutní potíže, očkování a objednání?",
+      "Umíte na web rychle přidat dovolenou nebo změnu ordinační doby?",
+      "Kdyby nový web ubral jednu opakovanou agendu, která by to byla?",
+    ],
+    medvision: "U dětských praktiků ověřujeme MEDVISION jako navazující variantu pro objednávání, příjem administrativních požadavků a přehled komunikace. Nejdřív potřebujeme pochopit konkrétní workflow ordinace a rodičů.",
+  },
   Gynekologie: {
     hook: "Pomáháme gynekologickým ordinacím vytvořit moderní a důvěryhodnou digitální prezentaci, kde pacientky rychle pochopí služby, způsob objednání i praktické informace bez zbytečného telefonování.",
     value: "Web postavíme s důrazem na důvěru, soukromí a snadnou orientaci. Součástí je vlastní vizuální identita a brandbook, texty, grafika, mobilní verze, formulář, základní SEO a napojení na Google.",

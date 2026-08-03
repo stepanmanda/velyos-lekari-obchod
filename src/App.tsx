@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 import { forbiddenClaims, objections, specialtyCopy } from "./content";
-import type { CallLog, Lead, LeadStatus, Specialty } from "./types";
+import type { CallLog, Lead, LeadPriority, LeadStatus, Specialty } from "./types";
 
 type Page = "dashboard" | "leads" | "playbook" | "offer";
 
@@ -17,6 +17,29 @@ const statuses: LeadStatus[] = [
   "Špatný kontakt",
   "Nevolat",
 ];
+const leadPriorities: LeadPriority[] = ["A", "B", "C"];
+
+function mergeCanonicalLeads(canonical: Lead[], saved: Lead[] = []) {
+  const savedById = new Map(saved.filter((lead) => lead?.id).map((lead) => [String(lead.id), lead]));
+  const unique = new Map<string, Lead>();
+  for (const lead of canonical) {
+    const id = String(lead.id);
+    if (unique.has(id)) continue;
+    const previous = savedById.get(id);
+    unique.set(id, previous ? {
+      ...lead,
+      status: previous.status || "Nevoláno",
+      notes: previous.notes || "",
+      nextFollowUp: previous.nextFollowUp || "",
+      meetingAt: previous.meetingAt || "",
+      meetingChannel: previous.meetingChannel,
+      lastContact: previous.lastContact || "",
+      attempts: Number(previous.attempts) || 0,
+      logs: Array.isArray(previous.logs) ? previous.logs : [],
+    } : lead);
+  }
+  return Array.from(unique.values());
+}
 
 const outcomeHelp: Record<LeadStatus, string> = {
   "Nevoláno": "Kontakt zůstane nezařazený.",
@@ -80,6 +103,7 @@ function App() {
   const [query, setQuery] = useState("");
   const [specialty, setSpecialty] = useState<Specialty | "Vše">("Vše");
   const [status, setStatus] = useState<LeadStatus | "Vše">("Vše");
+  const [leadPriority, setLeadPriority] = useState<LeadPriority | "Vše">("Vše");
   const [city, setCity] = useState("Vše");
   const [profileName, setProfileName] = useState(() => localStorage.getItem(PROFILE_KEY) || "Obchodník");
   const [dataNotice, setDataNotice] = useState("");
@@ -87,20 +111,25 @@ function App() {
 
   useEffect(() => {
     async function load() {
+      let savedLeads: Lead[] = [];
       const saved = localStorage.getItem(STORAGE_KEY);
-      if (saved) {
-        try {
-          setLeads(JSON.parse(saved));
-          setLoading(false);
-          return;
-        } catch {
-          localStorage.removeItem(STORAGE_KEY);
-        }
+      if (saved) try {
+        const parsed = JSON.parse(saved) as Lead[];
+        if (Array.isArray(parsed)) savedLeads = parsed;
+      } catch {
+        localStorage.removeItem(STORAGE_KEY);
       }
-      const response = await fetch("./leads.json");
-      const initial = (await response.json()) as Lead[];
-      setLeads(initial);
-      setLoading(false);
+      try {
+        const response = await fetch("./leads.json");
+        if (!response.ok) throw new Error(`HTTP ${response.status}`);
+        const canonical = (await response.json()) as Lead[];
+        setLeads(mergeCanonicalLeads(canonical, savedLeads));
+      } catch {
+        setLeads(savedLeads);
+        setDataNotice("Aktuální databázi se nepodařilo načíst; zobrazuji poslední lokální zálohu.");
+      } finally {
+        setLoading(false);
+      }
     }
     void load();
   }, []);
@@ -124,10 +153,11 @@ function App() {
         (!needle || haystack.includes(needle)) &&
         (specialty === "Vše" || lead.specialty === specialty) &&
         (status === "Vše" || lead.status === status) &&
+        (leadPriority === "Vše" || lead.priority === leadPriority) &&
         (city === "Vše" || lead.city === city)
       );
     });
-  }, [leads, query, specialty, status, city]);
+  }, [leads, query, specialty, status, leadPriority, city]);
 
   const today = todayIso();
   const metrics = useMemo(() => {
@@ -147,6 +177,7 @@ function App() {
         if (a.nextFollowUp && !b.nextFollowUp) return -1;
         if (!a.nextFollowUp && b.nextFollowUp) return 1;
         if (a.nextFollowUp && b.nextFollowUp) return a.nextFollowUp.localeCompare(b.nextFollowUp);
+        if (a.commercialScore !== b.commercialScore) return b.commercialScore - a.commercialScore;
         if (a.phone && !b.phone) return -1;
         if (!a.phone && b.phone) return 1;
         return a.city.localeCompare(b.city, "cs");
@@ -165,7 +196,7 @@ function App() {
   function exportData() {
     const payload = {
       exportedAt: new Date().toISOString(),
-      version: 1,
+      version: 2,
       leads,
     };
     const blob = new Blob([JSON.stringify(payload, null, 2)], { type: "application/json" });
@@ -178,9 +209,9 @@ function App() {
   }
 
   function exportCsv() {
-    const columns = ["Ordinace", "Obor", "Město", "Telefon", "E-mail", "Web", "Stav", "Pokusy", "Poslední kontakt", "Další krok", "Poznámky"];
+    const columns = ["ID NRPZS", "Ordinace", "Obor", "Segmenty", "Město", "Telefon", "E-mail", "Web", "Priorita", "Obchodní skóre", "Doporučená nabídka", "Stav", "Pokusy", "Poslední kontakt", "Další krok", "Poznámky"];
     const quote = (value: unknown) => `"${String(value ?? "").replaceAll('"', '""')}"`;
-    const rows = leads.map((lead) => [lead.name, lead.specialty, lead.city, lead.phone, lead.email, lead.web, lead.status, lead.attempts, lead.lastContact, lead.nextFollowUp, lead.notes]);
+    const rows = leads.map((lead) => [lead.id, lead.name, lead.specialty, lead.segments.join("|"), lead.city, lead.phone, lead.email, lead.web, lead.priority, lead.commercialScore, lead.recommendedOffer, lead.status, lead.attempts, lead.lastContact, lead.nextFollowUp, lead.notes]);
     const csv = `\uFEFF${[columns, ...rows].map((row) => row.map(quote).join(",")).join("\n")}`;
     const blob = new Blob([csv], { type: "text/csv;charset=utf-8" });
     const url = URL.createObjectURL(blob);
@@ -196,8 +227,9 @@ function App() {
       const parsed = JSON.parse(await file.text()) as { leads?: Lead[] } | Lead[];
       const imported = Array.isArray(parsed) ? parsed : parsed.leads;
       if (!Array.isArray(imported) || !imported.length) throw new Error("Neplatná záloha");
-      setLeads(imported);
-      setDataNotice(`Načtena záloha: ${imported.length} kontaktů.`);
+      const merged = mergeCanonicalLeads(leads, imported);
+      setLeads(merged);
+      setDataNotice(`Záloha sloučena: ${merged.length} unikátních kontaktů, historie zachována.`);
     } catch {
       setDataNotice("Soubor se nepodařilo načíst. Vyberte JSON zálohu z této aplikace.");
     }
@@ -255,6 +287,8 @@ function App() {
                 setSpecialty={setSpecialty}
                 status={status}
                 setStatus={setStatus}
+                leadPriority={leadPriority}
+                setLeadPriority={setLeadPriority}
                 city={city}
                 setCity={setCity}
                 cities={cities}
@@ -331,7 +365,7 @@ function LeadRow({ lead, index, onCall }: { lead: Lead; index: number; onCall: (
   return (
     <div className="priority-row">
       <span className="row-number">{String(index).padStart(2, "0")}</span>
-      <div className="lead-main"><strong>{lead.name}</strong><span>{lead.specialty} · {lead.city}</span></div>
+      <div className="lead-main"><strong>{lead.name}</strong><span>{lead.specialty} · {lead.city} · skóre {lead.commercialScore}</span></div>
       <StatusPill status={lead.status} />
       <span className="next-step">{lead.nextFollowUp ? displayDate(lead.nextFollowUp, true) : lead.phone || "Bez telefonu"}</span>
       <button className="call-button" onClick={() => onCall(lead.id)}>Volat</button>
@@ -339,10 +373,11 @@ function LeadRow({ lead, index, onCall }: { lead: Lead; index: number; onCall: (
   );
 }
 
-function LeadsPage({ leads, total, query, setQuery, specialty, setSpecialty, status, setStatus, city, setCity, cities, onCall }: {
+function LeadsPage({ leads, total, query, setQuery, specialty, setSpecialty, status, setStatus, leadPriority, setLeadPriority, city, setCity, cities, onCall }: {
   leads: Lead[]; total: number; query: string; setQuery: (value: string) => void;
   specialty: Specialty | "Vše"; setSpecialty: (value: Specialty | "Vše") => void;
   status: LeadStatus | "Vše"; setStatus: (value: LeadStatus | "Vše") => void;
+  leadPriority: LeadPriority | "Vše"; setLeadPriority: (value: LeadPriority | "Vše") => void;
   city: string; setCity: (value: string) => void; cities: string[]; onCall: (id: string) => void;
 }) {
   return (
@@ -350,19 +385,21 @@ function LeadsPage({ leads, total, query, setQuery, specialty, setSpecialty, sta
       <section className="page-title"><p className="eyebrow">DATABÁZE ORDINACÍ</p><h1>Kontakty</h1><p>{leads.length} z {total} kontaktů odpovídá filtrům.</p></section>
       <section className="filters" aria-label="Filtry kontaktů">
         <label className="search-field"><span>Hledat</span><input value={query} onChange={(event) => setQuery(event.target.value)} placeholder="Ordinace, lékař, telefon…" /></label>
-        <label><span>Obor</span><select value={specialty} onChange={(event) => setSpecialty(event.target.value as Specialty | "Vše")}><option>Vše</option><option>Praktik</option><option>Gynekologie</option><option>Stomatologie</option></select></label>
+        <label><span>Obor</span><select value={specialty} onChange={(event) => setSpecialty(event.target.value as Specialty | "Vše")}><option>Vše</option><option>Praktik</option><option>Pediatrie</option><option>Gynekologie</option><option>Stomatologie</option></select></label>
+        <label><span>Priorita</span><select value={leadPriority} onChange={(event) => setLeadPriority(event.target.value as LeadPriority | "Vše")}><option>Vše</option>{leadPriorities.map((value) => <option key={value}>{value}</option>)}</select></label>
         <label><span>Stav</span><select value={status} onChange={(event) => setStatus(event.target.value as LeadStatus | "Vše")}><option>Vše</option>{statuses.map((value) => <option key={value}>{value}</option>)}</select></label>
         <label><span>Město</span><select value={city} onChange={(event) => setCity(event.target.value)}><option>Vše</option>{cities.map((value) => <option key={value}>{value}</option>)}</select></label>
       </section>
       <section className="leads-table-wrap">
         <table className="leads-table">
-          <thead><tr><th>Ordinace</th><th>Kontakt</th><th>Web</th><th>Stav</th><th>Další krok</th><th /></tr></thead>
+          <thead><tr><th>Ordinace</th><th>Kontakt</th><th>Digitální stav</th><th>Priorita</th><th>Stav</th><th>Další krok</th><th /></tr></thead>
           <tbody>
             {leads.map((lead) => (
               <tr key={lead.id}>
                 <td><strong>{lead.name}</strong><span>{lead.specialty} · {lead.city}</span></td>
                 <td><a href={lead.phone ? `tel:${lead.phone.replace(/\s/g, "")}` : undefined}>{lead.phone || "Bez telefonu"}</a><span>{lead.email || lead.representative || "—"}</span></td>
-                <td>{lead.web ? <a href={websiteUrl(lead.web)} target="_blank" rel="noreferrer">{websiteLabel(lead.web)}</a> : <span className="web-opportunity">Bez webu</span>}</td>
+                <td>{lead.web ? <a href={websiteUrl(lead.web)} target="_blank" rel="noreferrer">{websiteLabel(lead.web)}</a> : <span className="web-opportunity">Bez vlastního webu</span>}<span>{lead.digitalStatus} · {lead.digitalScore}/10</span></td>
+                <td><strong className={`priority-badge priority-${lead.priority.toLowerCase()}`}>{lead.priority}</strong><span>{lead.commercialScore}/100 · {lead.recommendedOffer}</span></td>
                 <td><StatusPill status={lead.status} /></td>
                 <td>{lead.nextFollowUp ? displayDate(lead.nextFollowUp, true) : lead.lastContact ? `Naposledy ${displayDate(lead.lastContact)}` : "—"}</td>
                 <td><button className="call-button" onClick={() => onCall(lead.id)}>Otevřít</button></td>
@@ -445,8 +482,9 @@ function CallWorkspace({ lead, caller, onClose, onSave }: { lead: Lead; caller: 
                 </ScriptStep>
               </div>
               <aside className="lead-card">
-                <p className="eyebrow">KONTAKT</p><h3>{lead.provider}</h3>
-                <dl><dt>Obor</dt><dd>{lead.specialty}</dd><dt>Město</dt><dd>{lead.city}</dd><dt>Zástupce</dt><dd>{lead.representative || "Neznámý"}</dd><dt>Web</dt><dd>{lead.web ? <a href={websiteUrl(lead.web)} target="_blank" rel="noreferrer">Otevřít web ↗</a> : <strong className="opportunity">Nemá uvedený web</strong>}</dd><dt>E-mail</dt><dd>{lead.email || "—"}</dd><dt>Pokusy</dt><dd>{lead.attempts}</dd></dl>
+                <p className="eyebrow">KONTAKT · PRIORITA {lead.priority}</p><h3>{lead.provider}</h3>
+                <div className="lead-recommendation"><strong>{lead.recommendedOffer}</strong><span>{lead.recommendedNextStep}</span></div>
+                <dl><dt>Obor</dt><dd>{lead.specialty} <small>({lead.segments.join(" · ")})</small></dd><dt>Město</dt><dd>{lead.city}</dd><dt>Zástupce</dt><dd>{lead.representative || "Neznámý"}</dd><dt>Skóre</dt><dd><strong>{lead.commercialScore}/100</strong> · digitální {lead.digitalScore}/10</dd><dt>Web</dt><dd>{lead.web ? <a href={websiteUrl(lead.web)} target="_blank" rel="noreferrer">Otevřít web ↗</a> : <strong className="opportunity">Vlastní web nenalezen</strong>}</dd><dt>E-mail</dt><dd>{lead.email || "—"}</dd><dt>Mapy</dt><dd>{lead.googleMapsUrl ? <a href={lead.googleMapsUrl} target="_blank" rel="noreferrer">Otevřít hledání ↗</a> : "—"}</dd><dt>Pokusy</dt><dd>{lead.attempts}</dd></dl>
                 <button className="primary-button full" onClick={() => setTab("record")}>Zapsat výsledek →</button>
               </aside>
             </div>
@@ -494,7 +532,7 @@ function Playbook() {
       </section>
       <section className="manual-section">
         <div className="section-heading"><p className="eyebrow">SCÉNÁŘ PODLE OBORU</p><h2>Jedna nabídka, jiné důvody</h2></div>
-        <div className="segment-tabs">{(["Praktik", "Gynekologie", "Stomatologie"] as Specialty[]).map((value) => <button className={activeSpecialty === value ? "active" : ""} onClick={() => setActiveSpecialty(value)} key={value}>{value}</button>)}</div>
+        <div className="segment-tabs">{(["Praktik", "Pediatrie", "Gynekologie", "Stomatologie"] as Specialty[]).map((value) => <button className={activeSpecialty === value ? "active" : ""} onClick={() => setActiveSpecialty(value)} key={value}>{value}</button>)}</div>
         <div className="segment-card"><p className="eyebrow">ÚVODNÍ HÁČEK</p><blockquote>„{copy.hook}“</blockquote><h3>Otázky, které otevřou rozhovor</h3><ul>{copy.questions.map((question) => <li key={question}>{question}</li>)}</ul></div>
       </section>
       <section className="manual-section"><div className="section-heading"><p className="eyebrow">NÁMITKY</p><h2>Neodrážej je. Pochop je.</h2><p>Nejdřív potvrď, že námitce rozumíš. Pak odpověz jednou myšlenkou a vrať rozhovor otázkou.</p></div><div className="objection-grid">{objections.map((item) => <details key={item.title}><summary>{item.title}<span>+</span></summary><p>{item.answer}</p></details>)}</div></section>

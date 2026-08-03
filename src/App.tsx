@@ -57,14 +57,14 @@ function mergeCanonicalLeads(canonical: Lead[], saved: Lead[] = []) {
 }
 
 const outcomeHelp: Record<LeadStatus, string> = {
-  "Nevoláno": "Kontakt zůstane nezařazený.",
-  "Nedovoláno": "Telefon nikdo nezvedl.",
-  "Zavolat znovu": "Domluvili jste se na jiném čase.",
-  "Poslat informace": "Po hovoru odešli krátký relevantní e-mail.",
-  "Schůzka": "Máte potvrzený osobní nebo online termín.",
-  "Nezájem": "Nabídka teď není relevantní.",
-  "Špatný kontakt": "Číslo nebo osoba nejsou správně.",
-  "Nevolat": "Kontakt už dále neoslovovat.",
+  "Nevoláno": "Kontakt zatím nemá výsledek hovoru.",
+  "Nedovoláno": "Telefon nebyl zvednutý.",
+  "Zavolat znovu": "Je potřeba naplánovat další pokus o hovor.",
+  "Poslat informace": "Po hovoru se odešle krátký relevantní e-mail.",
+  "Schůzka": "Je domluvený osobní nebo online termín.",
+  "Nezájem": "Nabídka teď není pro kontakt relevantní.",
+  "Špatný kontakt": "Telefonní číslo nebo kontaktní osoba nepatří ke správné ordinaci.",
+  "Nevolat": "Kontakt se už dál neoslovuje.",
 };
 
 const navItems: Array<{ id: Page; label: string; short: string }> = [
@@ -195,7 +195,7 @@ function App() {
   const [status, setStatus] = useState<LeadStatus | "Vše">("Vše");
   const [leadPriority, setLeadPriority] = useState<LeadPriority | "Vše">("Vše");
   const [leadSort, setLeadSort] = useState<LeadSort>("score");
-  const [leadSignal, setLeadSignal] = useState<LeadSignal>("Vše");
+  const [leadSignal, setLeadSignal] = useState<LeadSignal>("contactable");
   const [city, setCity] = useState("Vše");
   const [profileName, setProfileName] = useState(() => localStorage.getItem(PROFILE_KEY) || "Obchodník");
   const [dataNotice, setDataNotice] = useState("");
@@ -275,6 +275,7 @@ function App() {
   const priority = useMemo(
     () => leads
       .filter((lead) => lead.status !== "Nevolat" && lead.status !== "Nezájem" && lead.status !== "Špatný kontakt")
+      .filter((lead) => Boolean(lead.phone || lead.email))
       .sort((a, b) => {
         if (a.nextFollowUp && !b.nextFollowUp) return -1;
         if (!a.nextFollowUp && b.nextFollowUp) return 1;
@@ -477,7 +478,7 @@ function LeadRow({ lead, index, onCall }: { lead: Lead; index: number; onCall: (
   return (
     <div className="priority-row">
       <span className="row-number">{String(index).padStart(2, "0")}</span>
-      <div className="lead-main"><strong>{lead.name}</strong><span>{lead.specialty} · {lead.city} · skóre {lead.commercialScore}</span></div>
+      <div className="lead-main"><strong>{lead.name}</strong><span>{lead.specialty} · {lead.city} · skóre {lead.commercialScore}</span><span>{todayOpeningHours(lead)}</span></div>
       <StatusPill status={lead.status} />
       <span className="next-step">{lead.nextFollowUp ? displayDate(lead.nextFollowUp, true) : lead.phone || "Bez telefonu"}</span>
       <button className="call-button" onClick={() => onCall(lead.id)}>Volat</button>
@@ -563,6 +564,14 @@ function CallWorkspace({ lead, caller, onClose, onSave, onUpdate }: { lead: Lead
     questions: currentOverrides.questions || defaultScript.questions,
   };
   const effectiveMode = effectiveOfferMode(lead, offerMode);
+
+  useEffect(() => {
+    function handleKeyDown(event: KeyboardEvent) {
+      if (event.key === "Escape") onClose();
+    }
+    window.addEventListener("keydown", handleKeyDown);
+    return () => window.removeEventListener("keydown", handleKeyDown);
+  }, [onClose]);
 
   function updateScriptField<K extends keyof CallScript>(field: K, value: CallScript[K]) {
     setScriptOverrides((current) => ({

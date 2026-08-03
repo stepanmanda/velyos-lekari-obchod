@@ -323,6 +323,20 @@
     "confidence": "C",
     "auditedAt": "2026-08-03"
   },
+  "242503": {
+    "schedule": {
+      "mon": [],
+      "tue": [],
+      "wed": [],
+      "thu": [],
+      "fri": [],
+      "sat": [],
+      "sun": []
+    },
+    "sourceUrl": "",
+    "confidence": "C",
+    "auditedAt": "2026-08-03"
+  },
   "244880": {
     "schedule": {
       "mon": [],
@@ -715,6 +729,20 @@
     "confidence": "C",
     "auditedAt": "2026-08-03"
   },
+  "167627": {
+    "schedule": {
+      "mon": [],
+      "tue": [],
+      "wed": [],
+      "thu": [],
+      "fri": [],
+      "sat": [],
+      "sun": []
+    },
+    "sourceUrl": "",
+    "confidence": "C",
+    "auditedAt": "2026-08-03"
+  },
   "260493": {
     "schedule": {
       "mon": [],
@@ -744,6 +772,20 @@
     "auditedAt": "2026-08-03"
   },
   "135402": {
+    "schedule": {
+      "mon": [],
+      "tue": [],
+      "wed": [],
+      "thu": [],
+      "fri": [],
+      "sat": [],
+      "sun": []
+    },
+    "sourceUrl": "",
+    "confidence": "C",
+    "auditedAt": "2026-08-03"
+  },
+  "245069": {
     "schedule": {
       "mon": [],
       "tue": [],
@@ -2000,6 +2042,20 @@
     "confidence": "C",
     "auditedAt": "2026-08-03"
   },
+  "134894": {
+    "schedule": {
+      "mon": [],
+      "tue": [],
+      "wed": [],
+      "thu": [],
+      "fri": [],
+      "sat": [],
+      "sun": []
+    },
+    "sourceUrl": "",
+    "confidence": "C",
+    "auditedAt": "2026-08-03"
+  },
   "245602": {
     "schedule": {
       "mon": [],
@@ -2578,6 +2634,20 @@
     },
     "sourceUrl": "https://www.firmy.cz/detail/12849992-west-art-medica-skalna.html",
     "confidence": "A",
+    "auditedAt": "2026-08-03"
+  },
+  "211288": {
+    "schedule": {
+      "mon": [],
+      "tue": [],
+      "wed": [],
+      "thu": [],
+      "fri": [],
+      "sat": [],
+      "sun": []
+    },
+    "sourceUrl": "",
+    "confidence": "C",
     "auditedAt": "2026-08-03"
   },
   "135605": {
@@ -3436,6 +3506,20 @@
     "confidence": "C",
     "auditedAt": "2026-08-03"
   },
+  "135014": {
+    "schedule": {
+      "mon": [],
+      "tue": [],
+      "wed": [],
+      "thu": [],
+      "fri": [],
+      "sat": [],
+      "sun": []
+    },
+    "sourceUrl": "",
+    "confidence": "C",
+    "auditedAt": "2026-08-03"
+  },
   "135706": {
     "schedule": {
       "mon": [],
@@ -3688,6 +3772,31 @@
     },
     "sourceUrl": "",
     "confidence": "C",
+    "auditedAt": "2026-08-03"
+  },
+  "191163": {
+    "schedule": {
+      "mon": [
+        "08:30–12:00",
+        "13:30–15:00"
+      ],
+      "tue": [
+        "08:30–13:30"
+      ],
+      "wed": [
+        "08:30–12:00"
+      ],
+      "thu": [
+        "08:30–13:30"
+      ],
+      "fri": [
+        "08:30–12:00"
+      ],
+      "sat": [],
+      "sun": []
+    },
+    "sourceUrl": "https://www.firmy.cz/detail/13010966-mudr-ondrej-nydl-oton-unk-s-r-o-karlovy-vary.html",
+    "confidence": "A",
     "auditedAt": "2026-08-03"
   },
   "135857": {
@@ -4012,6 +4121,20 @@
     "confidence": "C",
     "auditedAt": "2026-08-03"
   },
+  "205782": {
+    "schedule": {
+      "mon": [],
+      "tue": [],
+      "wed": [],
+      "thu": [],
+      "fri": [],
+      "sat": [],
+      "sun": []
+    },
+    "sourceUrl": "",
+    "confidence": "C",
+    "auditedAt": "2026-08-03"
+  },
   "193320": {
     "schedule": {
       "mon": [],
@@ -4170,6 +4293,20 @@
     "confidence": "A",
     "auditedAt": "2026-08-03"
   },
+  "242967": {
+    "schedule": {
+      "mon": [],
+      "tue": [],
+      "wed": [],
+      "thu": [],
+      "fri": [],
+      "sat": [],
+      "sun": []
+    },
+    "sourceUrl": "",
+    "confidence": "C",
+    "auditedAt": "2026-08-03"
+  },
   "211810": {
     "schedule": {
       "mon": [
@@ -4192,6 +4329,20 @@
     },
     "sourceUrl": "https://usmivejte-se.cz/",
     "confidence": "A",
+    "auditedAt": "2026-08-03"
+  },
+  "224037": {
+    "schedule": {
+      "mon": [],
+      "tue": [],
+      "wed": [],
+      "thu": [],
+      "fri": [],
+      "sat": [],
+      "sun": []
+    },
+    "sourceUrl": "",
+    "confidence": "C",
     "auditedAt": "2026-08-03"
   },
   "259896": {
@@ -5127,6 +5278,20 @@
     "confidence": "A",
     "auditedAt": "2026-08-03"
   },
+  "167532": {
+    "schedule": {
+      "mon": [],
+      "tue": [],
+      "wed": [],
+      "thu": [],
+      "fri": [],
+      "sat": [],
+      "sun": []
+    },
+    "sourceUrl": "",
+    "confidence": "C",
+    "auditedAt": "2026-08-03"
+  },
   "135873": {
     "schedule": {
       "mon": [],
@@ -5969,6 +6134,20 @@
     "auditedAt": "2026-08-03"
   },
   "135083": {
+    "schedule": {
+      "mon": [],
+      "tue": [],
+      "wed": [],
+      "thu": [],
+      "fri": [],
+      "sat": [],
+      "sun": []
+    },
+    "sourceUrl": "",
+    "confidence": "C",
+    "auditedAt": "2026-08-03"
+  },
+  "248477": {
     "schedule": {
       "mon": [],
       "tue": [],

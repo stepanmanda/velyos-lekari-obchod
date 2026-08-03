@@ -20,6 +20,17 @@ const statuses: LeadStatus[] = [
   "Nevolat",
 ];
 const leadPriorities: LeadPriority[] = ["A", "B", "C"];
+const specialtySegments: Record<Specialty, string[]> = {
+  Praktik: ["VPL"],
+  Pediatrie: ["PLDD"],
+  Gynekologie: ["GYN"],
+  Stomatologie: ["ZUB", "ORTO"],
+  ORL: ["ORL"],
+};
+
+function leadMatchesSpecialty(lead: Lead, specialty: Specialty | "Vše") {
+  return specialty === "Vše" || specialtySegments[specialty].some((segment) => lead.segments.includes(segment));
+}
 
 function mergeCanonicalLeads(canonical: Lead[], saved: Lead[] = []) {
   const savedById = new Map(saved.filter((lead) => lead?.id).map((lead) => [String(lead.id), lead]));
@@ -232,7 +243,7 @@ function App() {
         .toLocaleLowerCase("cs");
       return (
         (!needle || haystack.includes(needle)) &&
-        (specialty === "Vše" || lead.specialty === specialty) &&
+        leadMatchesSpecialty(lead, specialty) &&
         (status === "Vše" || lead.status === status) &&
         (leadPriority === "Vše" || lead.priority === leadPriority) &&
         (leadSignal === "Vše" ||
@@ -492,7 +503,7 @@ function LeadsPage({ leads, total, query, setQuery, specialty, setSpecialty, sta
       <section className="page-title"><p className="eyebrow">DATABÁZE ORDINACÍ</p><h1>Kontakty</h1><p>{leads.length} z {total} kontaktů odpovídá filtrům.</p></section>
       <section className="filters" aria-label="Filtry kontaktů">
         <label className="search-field"><span>Hledat</span><input value={query} onChange={(event) => setQuery(event.target.value)} placeholder="Ordinace, lékař, telefon…" /></label>
-        <label><span>Obor</span><select value={specialty} onChange={(event) => setSpecialty(event.target.value as Specialty | "Vše")}><option>Vše</option><option>Praktik</option><option>Pediatrie</option><option>Gynekologie</option><option>Stomatologie</option></select></label>
+        <label><span>Obor</span><select value={specialty} onChange={(event) => setSpecialty(event.target.value as Specialty | "Vše")}><option>Vše</option><option>Praktik</option><option>Pediatrie</option><option>Gynekologie</option><option>Stomatologie</option><option>ORL</option></select></label>
         <label><span>Priorita</span><select value={leadPriority} onChange={(event) => setLeadPriority(event.target.value as LeadPriority | "Vše")}><option>Vše</option>{leadPriorities.map((value) => <option key={value}>{value}</option>)}</select></label>
         <label><span>Stav</span><select value={status} onChange={(event) => setStatus(event.target.value as LeadStatus | "Vše")}><option>Vše</option>{statuses.map((value) => <option key={value}>{value}</option>)}</select></label>
         <label><span>Město</span><select value={city} onChange={(event) => setCity(event.target.value)}><option>Vše</option>{cities.map((value) => <option key={value}>{value}</option>)}</select></label>
@@ -697,7 +708,7 @@ function Playbook() {
       </section>
       <section className="manual-section">
         <div className="section-heading"><p className="eyebrow">SCÉNÁŘ PODLE OBORU</p><h2>Jedna nabídka, jiné důvody</h2></div>
-        <div className="segment-tabs">{(["Praktik", "Pediatrie", "Gynekologie", "Stomatologie"] as Specialty[]).map((value) => <button className={activeSpecialty === value ? "active" : ""} onClick={() => setActiveSpecialty(value)} key={value}>{value}</button>)}</div>
+        <div className="segment-tabs">{(["Praktik", "Pediatrie", "Gynekologie", "Stomatologie", "ORL"] as Specialty[]).map((value) => <button className={activeSpecialty === value ? "active" : ""} onClick={() => setActiveSpecialty(value)} key={value}>{value}</button>)}</div>
         <div className="segment-card"><p className="eyebrow">ÚVODNÍ HÁČEK</p><blockquote>„{copy.hook}“</blockquote><h3>Otázky, které otevřou rozhovor</h3><ul>{copy.questions.map((question) => <li key={question}>{question}</li>)}</ul></div>
       </section>
       <section className="manual-section"><div className="section-heading"><p className="eyebrow">NÁMITKY</p><h2>Neodrážej je. Pochop je.</h2><p>Nejdřív potvrď, že námitce rozumíš. Pak odpověz jednou myšlenkou a vrať rozhovor otázkou.</p></div><div className="objection-grid">{objections.map((item) => <details key={item.title}><summary>{item.title}<span>+</span></summary><p>{item.answer}</p></details>)}</div></section>

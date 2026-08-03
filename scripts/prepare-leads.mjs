@@ -63,6 +63,7 @@ function primarySpecialty(segments) {
   if (segments.includes("VPL")) return "Praktik";
   if (segments.includes("PLDD")) return "Pediatrie";
   if (segments.includes("GYN")) return "Gynekologie";
+  if (segments.includes("ORL")) return "ORL";
   return "Stomatologie";
 }
 

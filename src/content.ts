@@ -75,6 +75,23 @@ export const specialtyCopy: Record<Specialty, {
     ],
     medvision: "Vedle webů vyvíjíme MEDVISION. Pro stomatologii může časem pomoci s objednáváním, připomínkami a tříděním administrativních požadavků. Dnes nabízíme přední místo mezi zájemci o pilot, ne hotový stomatologický systém.",
   },
+  ORL: {
+    hook: "Pomáháme ORL ordinacím vytvořit přehlednou a důvěryhodnou digitální prezentaci, kde pacient rychle najde služby, způsob objednání, postup při akutních potížích i správný kontakt bez zbytečného telefonování.",
+    value: "Web jasně představí vyšetření, audiologii, péči o děti i dospělé, objednání a aktuální provozní informace. Součástí je vlastní vizuální identita a brandbook, texty, grafika, mobilní verze, formulář, základní SEO a napojení na Google.",
+    questions: [
+      "Odpovídá současný web tomu, jak chcete, aby ORL ordinace působila?",
+      "Najde pacient snadno, jak se objednat a co dělat při akutním problému?",
+      "Které dotazy na vyšetření, termíny nebo audiologii se po telefonu nejčastěji opakují?",
+      "Je pro vás důležitější modernější prezentace, nebo snížení administrativy?",
+    ],
+    medvisionQuestions: [
+      "Jak dnes rozlišujete objednání, administrativní požadavky a akutní potíže?",
+      "Které telefonáty se během dne nejčastěji opakují?",
+      "Přicházejí požadavky jedním kanálem, nebo se sbíhají z telefonu, e-mailu a formulářů?",
+      "Co musí při případném zjednodušení vždy zůstat pod přímou kontrolou sestry nebo lékaře?",
+    ],
+    medvision: "Vedle webů vyvíjíme MEDVISION. Pro ORL nejdřív ověřujeme, zda může bezpečně pomoci s objednáváním a tříděním administrativních požadavků podle konkrétního provozu ordinace. Dnes nabízíme validační rozhovor a možnost pilotu, ne hotové oborové řešení.",
+  },
 };
 
 export const objections = [
@@ -117,6 +134,6 @@ export const forbiddenClaims = [
   "Neslibuj konkrétní úsporu času, počet pacientů ani návratnost bez ověření.",
   "Neříkej, že AI diagnostikuje, doporučuje léčbu nebo sama vyhodnocuje naléhavost.",
   "Neslibuj finální cenu bez potvrzení rozsahu; bezpečná formulace je „kompletní web do 50 000 Kč, hosting a doména zvlášť“.",
-  "U gynekologů a zubařů nepředstavuj MEDVISION jako hotové oborové řešení.",
+  "U gynekologů, zubařů a ORL nepředstavuj MEDVISION jako hotové oborové řešení.",
   "Nevymýšlej reference. M3 MEDIC lze jmenovat pouze jako první implementaci/pilot od 10. 8. 2026.",
 ];

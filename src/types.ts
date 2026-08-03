@@ -1,4 +1,4 @@
-export type Specialty = "Praktik" | "Pediatrie" | "Gynekologie" | "Stomatologie";
+export type Specialty = "Praktik" | "Pediatrie" | "Gynekologie" | "Stomatologie" | "ORL";
 export type LeadPriority = "A" | "B" | "C";
 export type OpeningHours = Record<"mon" | "tue" | "wed" | "thu" | "fri" | "sat" | "sun", string[]>;
 export type OfferMode = "auto" | "web" | "medvision" | "web_medvision";

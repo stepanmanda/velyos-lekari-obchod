@@ -92,6 +92,74 @@ export const specialtyCopy: Record<Specialty, {
     ],
     medvision: "Vedle webů vyvíjíme MEDVISION. Pro ORL nejdřív ověřujeme, zda může bezpečně pomoci s objednáváním a tříděním administrativních požadavků podle konkrétního provozu ordinace. Dnes nabízíme validační rozhovor a možnost pilotu, ne hotové oborové řešení.",
   },
+  Dermatologie: {
+    hook: "Pomáháme dermatologickým ordinacím vytvořit důvěryhodný web, na kterém pacient rychle pochopí rozsah péče, způsob objednání, přijímání nových pacientů i praktické informace před návštěvou.",
+    value: "Web přehledně oddělí zdravotní a případné estetické služby, představí tým a nastaví jasné kontaktní cesty. Součástí je vlastní vizuální identita a brandbook, texty, grafika, mobilní verze, formulář, základní SEO a napojení na Google.",
+    questions: [
+      "Najde pacient na současném webu snadno, s jakými potížemi se může objednat?",
+      "Je jasně rozlišená zdravotní péče, zákroky a případné samoplátecké služby?",
+      "Které dotazy na termíny, doporučení nebo přípravu před návštěvou se nejčastěji opakují?",
+      "Potřebujete spíš lepší prezentaci, nebo přehlednější příjem požadavků?",
+    ],
+    medvisionQuestions: [
+      "Jak dnes třídíte nové objednávky, kontroly a administrativní požadavky?",
+      "Kolik požadavků přichází telefonem a kolik jinými kanály?",
+      "Které informace musí pacient dodat ještě před objednáním?",
+      "Co musí vždy posoudit sestra nebo lékař osobně?",
+    ],
+    medvision: "Pro dermatologii MEDVISION zatím oborově validujeme. Zjišťujeme, zda může bezpečně pomoci s objednáváním a administrativními požadavky; nenabízíme jej jako hotové dermatologické řešení.",
+  },
+  Oční: {
+    hook: "Pomáháme očním ordinacím zpřehlednit digitální prezentaci, aby pacient rychle našel nabízená vyšetření, způsob objednání, provozní informace a správný kontakt.",
+    value: "Web srozumitelně představí péči o děti či dospělé, vyšetření, přístrojové vybavení a objednání. Součástí je vlastní vizuální identita a brandbook, texty, grafika, mobilní verze, formulář, základní SEO a napojení na Google.",
+    questions: [
+      "Pozná pacient ze současného webu, jaká vyšetření poskytujete a komu?",
+      "Najde snadno způsob objednání a informace potřebné před návštěvou?",
+      "Které dotazy na termíny, doporučení nebo výsledky nejvíc zatěžují telefon?",
+      "Je pro vás důležitější prezentace ordinace, nebo snížení opakované administrativy?",
+    ],
+    medvisionQuestions: [
+      "Jak dnes rozlišujete objednání, kontroly a administrativní dotazy?",
+      "Které požadavky musí sestra během dne opakovaně přepisovat?",
+      "Přichází komunikace jedním systémem, nebo z více kanálů?",
+      "Co musí při komunikaci vždy zůstat pod přímou kontrolou zdravotníka?",
+    ],
+    medvision: "Pro oční ordinace MEDVISION zatím oborově validujeme. Může být tématem pro řízení objednávek a administrativních požadavků, ale nejde o hotové oční řešení ani nástroj pro posuzování zdravotního stavu.",
+  },
+  Kardiologie: {
+    hook: "Pomáháme kardiologickým ambulancím vytvořit přehledný a důvěryhodný web, kde pacient najde rozsah vyšetření, podmínky objednání, přípravu před návštěvou a aktuální kontakty.",
+    value: "Web sjednotí informace o vyšetřeních, doporučeních, přípravě, týmu a objednání. Součástí je vlastní vizuální identita a brandbook, texty, grafika, mobilní verze, formulář, základní SEO a napojení na Google.",
+    questions: [
+      "Najdou pacienti před návštěvou vše o objednání a potřebné přípravě?",
+      "Které dotazy na doporučení, termíny nebo dokumentaci se nejčastěji opakují?",
+      "Umíte snadno zveřejnit změnu provozu nebo dovolenou?",
+      "Kde dnes vzniká nejvíc zbytečných telefonátů či přepisování?",
+    ],
+    medvisionQuestions: [
+      "Jak dnes přijímáte žádosti o termín, kontrolu a administrativní dokumenty?",
+      "Které informace musí být připravené před objednáním pacienta?",
+      "Kolik komunikačních kanálů musí personál sledovat?",
+      "Co musí vždy zůstat pod rozhodnutím lékaře nebo sestry?",
+    ],
+    medvision: "Pro kardiologii MEDVISION zatím oborově validujeme pouze pro organizační a administrativní workflow. Nemá vyhodnocovat symptomy, naléhavost ani klinická data a nenabízíme jej jako hotové kardiologické řešení.",
+  },
+  Ortopedie: {
+    hook: "Pomáháme ortopedickým ordinacím postavit přehledný web, kde pacient rychle zjistí rozsah péče, způsob objednání, potřebná vyšetření a praktický postup před návštěvou.",
+    value: "Web sjednotí služby, tým, objednání, informace k doporučení či dokumentaci a aktuální provoz. Součástí je vlastní vizuální identita a brandbook, texty, grafika, mobilní verze, formulář, základní SEO a napojení na Google.",
+    questions: [
+      "Najde pacient snadno, s čím se může objednat a co má přinést?",
+      "Je na webu jasný postup pro nové pacienty, kontroly a akutní potíže?",
+      "Které dotazy na termíny, doporučení nebo snímky se nejčastěji opakují?",
+      "Pomohla by vám víc lepší prezentace, nebo přehlednější příjem požadavků?",
+    ],
+    medvisionQuestions: [
+      "Jak dnes rozlišujete nové objednávky, kontroly a administrativní požadavky?",
+      "Jaké podklady musí pacient dodat před návštěvou?",
+      "Kde personál nejčastěji přepisuje informace mezi telefonem, e-mailem a systémem?",
+      "Které situace musí vždy řešit zdravotník přímo?",
+    ],
+    medvision: "Pro ortopedii MEDVISION zatím oborově validujeme jako podporu objednávání a administrativy. Není určen k posuzování akutnosti ani léčby a nenabízíme jej jako hotové ortopedické řešení.",
+  },
 };
 
 export const objections = [
@@ -134,6 +202,6 @@ export const forbiddenClaims = [
   "Neslibuj konkrétní úsporu času, počet pacientů ani návratnost bez ověření.",
   "Neříkej, že AI diagnostikuje, doporučuje léčbu nebo sama vyhodnocuje naléhavost.",
   "Neslibuj finální cenu bez potvrzení rozsahu; bezpečná formulace je „kompletní web do 50 000 Kč, hosting a doména zvlášť“.",
-  "U gynekologů, zubařů a ORL nepředstavuj MEDVISION jako hotové oborové řešení.",
+  "U specialistů mimo praktiky a pediatry nepředstavuj MEDVISION jako hotové oborové řešení.",
   "Nevymýšlej reference. M3 MEDIC lze jmenovat pouze jako první implementaci/pilot od 10. 8. 2026.",
 ];

@@ -64,6 +64,10 @@ function primarySpecialty(segments) {
   if (segments.includes("PLDD")) return "Pediatrie";
   if (segments.includes("GYN")) return "Gynekologie";
   if (segments.includes("ORL")) return "ORL";
+  if (segments.includes("DERM")) return "Dermatologie";
+  if (segments.includes("OCNI")) return "Oční";
+  if (segments.includes("KARD")) return "Kardiologie";
+  if (segments.includes("ORTOP")) return "Ortopedie";
   return "Stomatologie";
 }
 

@@ -4,7 +4,7 @@ Interní volací kokpit pro nabídku digitální identity ordinacím a navazují
 
 ## Co aplikace umí
 
-- 416 auditovaných míst péče: praktici, pediatři, gynekologové, stomatologové, ortodontisté a ORL z NRPZS,
+- 532 auditovaných míst péče: praktici, pediatři, gynekologové, stomatologové, ortodontisté, ORL, dermatologové, oční lékaři, kardiologové a ortopedi z NRPZS,
 - digitální skóre, obchodní priorita a doporučená nabídka z veřejného auditu,
 - město, adresa a veřejně dohledané ordinační hodiny s odkazem na zdroj,
 - scénář hovoru upravený podle oboru,
@@ -34,5 +34,5 @@ Workflow `.github/workflows/deploy-pages.yml` sestaví web po každém pushi do 
 ## Zdroj kontaktů
 
 Vstupní CSV: `../outputs/kv-lekari-karlovarsky-kraj-2026-08-03/kv_lekari_digitalni_audit_2026-08-03.csv`.
-Generátor přebírá všech 416 auditovaných míst péče. Primární deduplikační klíč je `misto_id` z NRPZS; stejné IČO na více adresách zůstává záměrně jako více provozoven.
+Generátor přebírá všech 532 auditovaných míst péče. Primární deduplikační klíč je `misto_id` z NRPZS; stejné IČO na více adresách zůstává záměrně jako více provozoven.
 Ordinační hodiny jsou uloženy v `data/opening-hours.json`. Zobrazují se pouze při jednoznačném spárování veřejného profilu nebo strukturovaných dat vlastního webu; jinak aplikace uvádí `Nedohledáno`.

@@ -227,7 +227,7 @@ blockquote mark { background: #e9e2b5; padding: 1px 3px; }
 .section-heading { max-width: 720px; margin-bottom: 25px; }
 .section-heading h2 { font-size: 34px; letter-spacing: -.04em; margin: 7px 0 8px; }
 .section-heading > p:last-child { color: var(--muted); line-height: 1.6; }
-.segment-tabs { display: flex; gap: 5px; margin-bottom: 12px; }
+.segment-tabs { display: flex; flex-wrap: wrap; gap: 5px; margin-bottom: 12px; }
 .segment-tabs button { border: 1px solid var(--line); background: transparent; border-radius: 99px; padding: 9px 15px; cursor: pointer; font-size: 11px; }
 .segment-tabs button.active { background: var(--ink); border-color: var(--ink); color: white; }
 .segment-card { background: var(--paper); border: 1px solid var(--line); padding: 32px; }

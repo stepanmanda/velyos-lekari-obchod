@@ -337,6 +337,20 @@
     "confidence": "C",
     "auditedAt": "2026-08-03"
   },
+  "239468": {
+    "schedule": {
+      "mon": [],
+      "tue": [],
+      "wed": [],
+      "thu": [],
+      "fri": [],
+      "sat": [],
+      "sun": []
+    },
+    "sourceUrl": "",
+    "confidence": "C",
+    "auditedAt": "2026-08-03"
+  },
   "244880": {
     "schedule": {
       "mon": [],
@@ -743,6 +757,20 @@
     "confidence": "C",
     "auditedAt": "2026-08-03"
   },
+  "135776": {
+    "schedule": {
+      "mon": [],
+      "tue": [],
+      "wed": [],
+      "thu": [],
+      "fri": [],
+      "sat": [],
+      "sun": []
+    },
+    "sourceUrl": "",
+    "confidence": "C",
+    "auditedAt": "2026-08-03"
+  },
   "260493": {
     "schedule": {
       "mon": [],
@@ -865,6 +893,20 @@
     "confidence": "A",
     "auditedAt": "2026-08-03"
   },
+  "193398": {
+    "schedule": {
+      "mon": [],
+      "tue": [],
+      "wed": [],
+      "thu": [],
+      "fri": [],
+      "sat": [],
+      "sun": []
+    },
+    "sourceUrl": "",
+    "confidence": "C",
+    "auditedAt": "2026-08-03"
+  },
   "248621": {
     "schedule": {
       "mon": [],
@@ -923,6 +965,34 @@
     },
     "sourceUrl": "",
     "confidence": "C",
+    "auditedAt": "2026-08-03"
+  },
+  "135225": {
+    "schedule": {
+      "mon": [
+        "07:30–12:00",
+        "13:00–17:00"
+      ],
+      "tue": [
+        "07:30–12:00",
+        "13:00–15:00"
+      ],
+      "wed": [
+        "07:30–12:00",
+        "13:00–17:00"
+      ],
+      "thu": [
+        "07:30–12:00",
+        "13:00–17:00"
+      ],
+      "fri": [
+        "07:30–13:00"
+      ],
+      "sat": [],
+      "sun": []
+    },
+    "sourceUrl": "https://www.firmy.cz/detail/1998299-kardio-kv-karlovy-vary.html",
+    "confidence": "A",
     "auditedAt": "2026-08-03"
   },
   "242372": {
@@ -1041,6 +1111,20 @@
     "confidence": "C",
     "auditedAt": "2026-08-03"
   },
+  "193842": {
+    "schedule": {
+      "mon": [],
+      "tue": [],
+      "wed": [],
+      "thu": [],
+      "fri": [],
+      "sat": [],
+      "sun": []
+    },
+    "sourceUrl": "",
+    "confidence": "C",
+    "auditedAt": "2026-08-03"
+  },
   "66076": {
     "schedule": {
       "mon": [],
@@ -1055,7 +1139,35 @@
     "confidence": "C",
     "auditedAt": "2026-08-03"
   },
+  "136015": {
+    "schedule": {
+      "mon": [],
+      "tue": [],
+      "wed": [],
+      "thu": [],
+      "fri": [],
+      "sat": [],
+      "sun": []
+    },
+    "sourceUrl": "",
+    "confidence": "C",
+    "auditedAt": "2026-08-03"
+  },
   "135016": {
+    "schedule": {
+      "mon": [],
+      "tue": [],
+      "wed": [],
+      "thu": [],
+      "fri": [],
+      "sat": [],
+      "sun": []
+    },
+    "sourceUrl": "",
+    "confidence": "C",
+    "auditedAt": "2026-08-03"
+  },
+  "192036": {
     "schedule": {
       "mon": [],
       "tue": [],
@@ -1251,6 +1363,48 @@
     "confidence": "C",
     "auditedAt": "2026-08-03"
   },
+  "193835": {
+    "schedule": {
+      "mon": [],
+      "tue": [],
+      "wed": [],
+      "thu": [],
+      "fri": [],
+      "sat": [],
+      "sun": []
+    },
+    "sourceUrl": "https://www.firmy.cz/detail/12840574-orto-centrum-ostrov.html",
+    "confidence": "A",
+    "auditedAt": "2026-08-03"
+  },
+  "242476": {
+    "schedule": {
+      "mon": [],
+      "tue": [],
+      "wed": [],
+      "thu": [],
+      "fri": [],
+      "sat": [],
+      "sun": []
+    },
+    "sourceUrl": "",
+    "confidence": "C",
+    "auditedAt": "2026-08-03"
+  },
+  "135620": {
+    "schedule": {
+      "mon": [],
+      "tue": [],
+      "wed": [],
+      "thu": [],
+      "fri": [],
+      "sat": [],
+      "sun": []
+    },
+    "sourceUrl": "https://www.firmy.cz/detail/12839408-detsky-lekar-kraslice-sokolov.html",
+    "confidence": "A",
+    "auditedAt": "2026-08-03"
+  },
   "192133": {
     "schedule": {
       "mon": [],
@@ -1279,7 +1433,35 @@
     "confidence": "C",
     "auditedAt": "2026-08-03"
   },
+  "193396": {
+    "schedule": {
+      "mon": [],
+      "tue": [],
+      "wed": [],
+      "thu": [],
+      "fri": [],
+      "sat": [],
+      "sun": []
+    },
+    "sourceUrl": "",
+    "confidence": "C",
+    "auditedAt": "2026-08-03"
+  },
   "134923": {
+    "schedule": {
+      "mon": [],
+      "tue": [],
+      "wed": [],
+      "thu": [],
+      "fri": [],
+      "sat": [],
+      "sun": []
+    },
+    "sourceUrl": "",
+    "confidence": "C",
+    "auditedAt": "2026-08-03"
+  },
+  "136085": {
     "schedule": {
       "mon": [],
       "tue": [],
@@ -1319,6 +1501,30 @@
     },
     "sourceUrl": "",
     "confidence": "C",
+    "auditedAt": "2026-08-03"
+  },
+  "135751": {
+    "schedule": {
+      "mon": [
+        "08:00–16:00"
+      ],
+      "tue": [
+        "08:00–16:00"
+      ],
+      "wed": [
+        "08:00–21:00"
+      ],
+      "thu": [
+        "08:00–16:00"
+      ],
+      "fri": [
+        "08:00–16:00"
+      ],
+      "sat": [],
+      "sun": []
+    },
+    "sourceUrl": "https://www.firmy.cz/detail/12895593-ocni-klinika-sokolov-sokolov.html",
+    "confidence": "A",
     "auditedAt": "2026-08-03"
   },
   "206405": {
@@ -2138,6 +2344,24 @@
     "confidence": "C",
     "auditedAt": "2026-08-03"
   },
+  "226452": {
+    "schedule": {
+      "mon": [
+        "08:00–14:00"
+      ],
+      "tue": [],
+      "wed": [
+        "08:00–13:00"
+      ],
+      "thu": [],
+      "fri": [],
+      "sat": [],
+      "sun": []
+    },
+    "sourceUrl": "https://www.firmy.cz/detail/13816367-orneto-nejdek.html",
+    "confidence": "A",
+    "auditedAt": "2026-08-03"
+  },
   "222264": {
     "schedule": {
       "mon": [],
@@ -2354,6 +2578,20 @@
     "confidence": "A",
     "auditedAt": "2026-08-03"
   },
+  "246656": {
+    "schedule": {
+      "mon": [],
+      "tue": [],
+      "wed": [],
+      "thu": [],
+      "fri": [],
+      "sat": [],
+      "sun": []
+    },
+    "sourceUrl": "",
+    "confidence": "C",
+    "auditedAt": "2026-08-03"
+  },
   "135778": {
     "schedule": {
       "mon": [],
@@ -2480,6 +2718,20 @@
     "confidence": "A",
     "auditedAt": "2026-08-03"
   },
+  "225819": {
+    "schedule": {
+      "mon": [],
+      "tue": [],
+      "wed": [],
+      "thu": [],
+      "fri": [],
+      "sat": [],
+      "sun": []
+    },
+    "sourceUrl": "",
+    "confidence": "C",
+    "auditedAt": "2026-08-03"
+  },
   "135819": {
     "schedule": {
       "mon": [],
@@ -2495,6 +2747,48 @@
     "auditedAt": "2026-08-03"
   },
   "135645": {
+    "schedule": {
+      "mon": [],
+      "tue": [],
+      "wed": [],
+      "thu": [],
+      "fri": [],
+      "sat": [],
+      "sun": []
+    },
+    "sourceUrl": "",
+    "confidence": "C",
+    "auditedAt": "2026-08-03"
+  },
+  "248411": {
+    "schedule": {
+      "mon": [],
+      "tue": [],
+      "wed": [],
+      "thu": [],
+      "fri": [],
+      "sat": [],
+      "sun": []
+    },
+    "sourceUrl": "",
+    "confidence": "C",
+    "auditedAt": "2026-08-03"
+  },
+  "194477": {
+    "schedule": {
+      "mon": [],
+      "tue": [],
+      "wed": [],
+      "thu": [],
+      "fri": [],
+      "sat": [],
+      "sun": []
+    },
+    "sourceUrl": "",
+    "confidence": "C",
+    "auditedAt": "2026-08-03"
+  },
+  "168071": {
     "schedule": {
       "mon": [],
       "tue": [],
@@ -2614,6 +2908,34 @@
     "confidence": "B",
     "auditedAt": "2026-08-03"
   },
+  "262399": {
+    "schedule": {
+      "mon": [],
+      "tue": [],
+      "wed": [],
+      "thu": [],
+      "fri": [],
+      "sat": [],
+      "sun": []
+    },
+    "sourceUrl": "",
+    "confidence": "C",
+    "auditedAt": "2026-08-03"
+  },
+  "241480": {
+    "schedule": {
+      "mon": [],
+      "tue": [],
+      "wed": [],
+      "thu": [],
+      "fri": [],
+      "sat": [],
+      "sun": []
+    },
+    "sourceUrl": "",
+    "confidence": "C",
+    "auditedAt": "2026-08-03"
+  },
   "135032": {
     "schedule": {
       "mon": [],
@@ -2628,7 +2950,49 @@
     "confidence": "C",
     "auditedAt": "2026-08-03"
   },
+  "259239": {
+    "schedule": {
+      "mon": [],
+      "tue": [],
+      "wed": [],
+      "thu": [],
+      "fri": [],
+      "sat": [],
+      "sun": []
+    },
+    "sourceUrl": "",
+    "confidence": "C",
+    "auditedAt": "2026-08-03"
+  },
   "135918": {
+    "schedule": {
+      "mon": [],
+      "tue": [],
+      "wed": [],
+      "thu": [],
+      "fri": [],
+      "sat": [],
+      "sun": []
+    },
+    "sourceUrl": "",
+    "confidence": "C",
+    "auditedAt": "2026-08-03"
+  },
+  "208048": {
+    "schedule": {
+      "mon": [],
+      "tue": [],
+      "wed": [],
+      "thu": [],
+      "fri": [],
+      "sat": [],
+      "sun": []
+    },
+    "sourceUrl": "",
+    "confidence": "C",
+    "auditedAt": "2026-08-03"
+  },
+  "244637": {
     "schedule": {
       "mon": [],
       "tue": [],
@@ -2690,6 +3054,30 @@
     "confidence": "C",
     "auditedAt": "2026-08-03"
   },
+  "135913": {
+    "schedule": {
+      "mon": [
+        "08:30–12:00"
+      ],
+      "tue": [
+        "08:30–15:00"
+      ],
+      "wed": [
+        "08:30–15:00"
+      ],
+      "thu": [
+        "08:30–15:00"
+      ],
+      "fri": [
+        "08:30–14:00"
+      ],
+      "sat": [],
+      "sun": []
+    },
+    "sourceUrl": "https://www.firmy.cz/detail/13278087-kardiologie-karlovy-vary-s-r-o-cheb.html",
+    "confidence": "A",
+    "auditedAt": "2026-08-03"
+  },
   "178203": {
     "schedule": {
       "mon": [],
@@ -2730,6 +3118,20 @@
     },
     "sourceUrl": "https://www.firmy.cz/detail/12839424-mudr-jana-kremova-cheb.html",
     "confidence": "A",
+    "auditedAt": "2026-08-03"
+  },
+  "135513": {
+    "schedule": {
+      "mon": [],
+      "tue": [],
+      "wed": [],
+      "thu": [],
+      "fri": [],
+      "sat": [],
+      "sun": []
+    },
+    "sourceUrl": "",
+    "confidence": "C",
     "auditedAt": "2026-08-03"
   },
   "227590": {
@@ -2811,6 +3213,30 @@
     "confidence": "A",
     "auditedAt": "2026-08-03"
   },
+  "135372": {
+    "schedule": {
+      "mon": [
+        "07:00–15:00"
+      ],
+      "tue": [
+        "13:30–18:00"
+      ],
+      "wed": [
+        "07:00–15:00"
+      ],
+      "thu": [
+        "07:00–16:00"
+      ],
+      "fri": [
+        "07:00–15:00"
+      ],
+      "sat": [],
+      "sun": []
+    },
+    "sourceUrl": "https://www.firmy.cz/detail/12785366-ortopedie-galek-s-r-o-sokolov.html",
+    "confidence": "A",
+    "auditedAt": "2026-08-03"
+  },
   "135673": {
     "schedule": {
       "mon": [],
@@ -2881,6 +3307,20 @@
     "confidence": "A",
     "auditedAt": "2026-08-03"
   },
+  "210405": {
+    "schedule": {
+      "mon": [],
+      "tue": [],
+      "wed": [],
+      "thu": [],
+      "fri": [],
+      "sat": [],
+      "sun": []
+    },
+    "sourceUrl": "",
+    "confidence": "C",
+    "auditedAt": "2026-08-03"
+  },
   "208069": {
     "schedule": {
       "mon": [],
@@ -2920,6 +3360,20 @@
     "auditedAt": "2026-08-03"
   },
   "167226": {
+    "schedule": {
+      "mon": [],
+      "tue": [],
+      "wed": [],
+      "thu": [],
+      "fri": [],
+      "sat": [],
+      "sun": []
+    },
+    "sourceUrl": "",
+    "confidence": "C",
+    "auditedAt": "2026-08-03"
+  },
+  "135290": {
     "schedule": {
       "mon": [],
       "tue": [],
@@ -3200,6 +3654,20 @@
     "confidence": "C",
     "auditedAt": "2026-08-03"
   },
+  "261401": {
+    "schedule": {
+      "mon": [],
+      "tue": [],
+      "wed": [],
+      "thu": [],
+      "fri": [],
+      "sat": [],
+      "sun": []
+    },
+    "sourceUrl": "",
+    "confidence": "C",
+    "auditedAt": "2026-08-03"
+  },
   "135227": {
     "schedule": {
       "mon": [],
@@ -3250,6 +3718,20 @@
     },
     "sourceUrl": "https://www.firmy.cz/detail/12840573-lekarska-praxe-s-r-o-mudr-drasky-ostrov.html",
     "confidence": "A",
+    "auditedAt": "2026-08-03"
+  },
+  "225665": {
+    "schedule": {
+      "mon": [],
+      "tue": [],
+      "wed": [],
+      "thu": [],
+      "fri": [],
+      "sat": [],
+      "sun": []
+    },
+    "sourceUrl": "",
+    "confidence": "C",
     "auditedAt": "2026-08-03"
   },
   "135906": {
@@ -3608,6 +4090,34 @@
     "confidence": "C",
     "auditedAt": "2026-08-03"
   },
+  "136064": {
+    "schedule": {
+      "mon": [],
+      "tue": [],
+      "wed": [],
+      "thu": [],
+      "fri": [],
+      "sat": [],
+      "sun": []
+    },
+    "sourceUrl": "https://www.firmy.cz/detail/12840398-garant-service-group-karlovy-vary.html",
+    "confidence": "A",
+    "auditedAt": "2026-08-03"
+  },
+  "244623": {
+    "schedule": {
+      "mon": [],
+      "tue": [],
+      "wed": [],
+      "thu": [],
+      "fri": [],
+      "sat": [],
+      "sun": []
+    },
+    "sourceUrl": "https://www.firmy.cz/detail/12840398-garant-service-group-karlovy-vary.html",
+    "confidence": "A",
+    "auditedAt": "2026-08-03"
+  },
   "260571": {
     "schedule": {
       "mon": [],
@@ -3658,6 +4168,20 @@
     },
     "sourceUrl": "https://www.firmy.cz/detail/2141124-moje-ambulance-karlovy-vary-dvory.html",
     "confidence": "B",
+    "auditedAt": "2026-08-03"
+  },
+  "136046": {
+    "schedule": {
+      "mon": [],
+      "tue": [],
+      "wed": [],
+      "thu": [],
+      "fri": [],
+      "sat": [],
+      "sun": []
+    },
+    "sourceUrl": "",
+    "confidence": "C",
     "auditedAt": "2026-08-03"
   },
   "135154": {
@@ -3867,6 +4391,20 @@
     "confidence": "C",
     "auditedAt": "2026-08-03"
   },
+  "135837": {
+    "schedule": {
+      "mon": [],
+      "tue": [],
+      "wed": [],
+      "thu": [],
+      "fri": [],
+      "sat": [],
+      "sun": []
+    },
+    "sourceUrl": "",
+    "confidence": "C",
+    "auditedAt": "2026-08-03"
+  },
   "66272": {
     "schedule": {
       "mon": [],
@@ -4035,6 +4573,20 @@
     "confidence": "C",
     "auditedAt": "2026-08-03"
   },
+  "245434": {
+    "schedule": {
+      "mon": [],
+      "tue": [],
+      "wed": [],
+      "thu": [],
+      "fri": [],
+      "sat": [],
+      "sun": []
+    },
+    "sourceUrl": "",
+    "confidence": "C",
+    "auditedAt": "2026-08-03"
+  },
   "242695": {
     "schedule": {
       "mon": [],
@@ -4063,6 +4615,20 @@
     "confidence": "C",
     "auditedAt": "2026-08-03"
   },
+  "248613": {
+    "schedule": {
+      "mon": [],
+      "tue": [],
+      "wed": [],
+      "thu": [],
+      "fri": [],
+      "sat": [],
+      "sun": []
+    },
+    "sourceUrl": "",
+    "confidence": "C",
+    "auditedAt": "2026-08-03"
+  },
   "245418": {
     "schedule": {
       "mon": [],
@@ -4077,7 +4643,63 @@
     "confidence": "C",
     "auditedAt": "2026-08-03"
   },
+  "224408": {
+    "schedule": {
+      "mon": [],
+      "tue": [],
+      "wed": [],
+      "thu": [],
+      "fri": [],
+      "sat": [],
+      "sun": []
+    },
+    "sourceUrl": "",
+    "confidence": "C",
+    "auditedAt": "2026-08-03"
+  },
+  "261790": {
+    "schedule": {
+      "mon": [],
+      "tue": [],
+      "wed": [],
+      "thu": [],
+      "fri": [],
+      "sat": [],
+      "sun": []
+    },
+    "sourceUrl": "",
+    "confidence": "C",
+    "auditedAt": "2026-08-03"
+  },
   "206596": {
+    "schedule": {
+      "mon": [],
+      "tue": [],
+      "wed": [],
+      "thu": [],
+      "fri": [],
+      "sat": [],
+      "sun": []
+    },
+    "sourceUrl": "",
+    "confidence": "C",
+    "auditedAt": "2026-08-03"
+  },
+  "261517": {
+    "schedule": {
+      "mon": [],
+      "tue": [],
+      "wed": [],
+      "thu": [],
+      "fri": [],
+      "sat": [],
+      "sun": []
+    },
+    "sourceUrl": "",
+    "confidence": "C",
+    "auditedAt": "2026-08-03"
+  },
+  "249013": {
     "schedule": {
       "mon": [],
       "tue": [],
@@ -4133,6 +4755,20 @@
     "confidence": "C",
     "auditedAt": "2026-08-03"
   },
+  "240919": {
+    "schedule": {
+      "mon": [],
+      "tue": [],
+      "wed": [],
+      "thu": [],
+      "fri": [],
+      "sat": [],
+      "sun": []
+    },
+    "sourceUrl": "",
+    "confidence": "C",
+    "auditedAt": "2026-08-03"
+  },
   "205782": {
     "schedule": {
       "mon": [],
@@ -4161,6 +4797,20 @@
     "confidence": "C",
     "auditedAt": "2026-08-03"
   },
+  "87035": {
+    "schedule": {
+      "mon": [],
+      "tue": [],
+      "wed": [],
+      "thu": [],
+      "fri": [],
+      "sat": [],
+      "sun": []
+    },
+    "sourceUrl": "",
+    "confidence": "C",
+    "auditedAt": "2026-08-03"
+  },
   "222005": {
     "schedule": {
       "mon": [],
@@ -4175,7 +4825,49 @@
     "confidence": "C",
     "auditedAt": "2026-08-03"
   },
+  "259985": {
+    "schedule": {
+      "mon": [],
+      "tue": [],
+      "wed": [],
+      "thu": [],
+      "fri": [],
+      "sat": [],
+      "sun": []
+    },
+    "sourceUrl": "",
+    "confidence": "C",
+    "auditedAt": "2026-08-03"
+  },
+  "248079": {
+    "schedule": {
+      "mon": [],
+      "tue": [],
+      "wed": [],
+      "thu": [],
+      "fri": [],
+      "sat": [],
+      "sun": []
+    },
+    "sourceUrl": "",
+    "confidence": "C",
+    "auditedAt": "2026-08-03"
+  },
   "243349": {
+    "schedule": {
+      "mon": [],
+      "tue": [],
+      "wed": [],
+      "thu": [],
+      "fri": [],
+      "sat": [],
+      "sun": []
+    },
+    "sourceUrl": "",
+    "confidence": "C",
+    "auditedAt": "2026-08-03"
+  },
+  "135798": {
     "schedule": {
       "mon": [],
       "tue": [],
@@ -4220,6 +4912,20 @@
     "auditedAt": "2026-08-03"
   },
   "189336": {
+    "schedule": {
+      "mon": [],
+      "tue": [],
+      "wed": [],
+      "thu": [],
+      "fri": [],
+      "sat": [],
+      "sun": []
+    },
+    "sourceUrl": "",
+    "confidence": "C",
+    "auditedAt": "2026-08-03"
+  },
+  "136067": {
     "schedule": {
       "mon": [],
       "tue": [],
@@ -4574,6 +5280,20 @@
     "confidence": "C",
     "auditedAt": "2026-08-03"
   },
+  "194479": {
+    "schedule": {
+      "mon": [],
+      "tue": [],
+      "wed": [],
+      "thu": [],
+      "fri": [],
+      "sat": [],
+      "sun": []
+    },
+    "sourceUrl": "",
+    "confidence": "C",
+    "auditedAt": "2026-08-03"
+  },
   "135836": {
     "schedule": {
       "mon": [],
@@ -4588,7 +5308,77 @@
     "confidence": "C",
     "auditedAt": "2026-08-03"
   },
+  "167493": {
+    "schedule": {
+      "mon": [],
+      "tue": [],
+      "wed": [],
+      "thu": [],
+      "fri": [],
+      "sat": [],
+      "sun": []
+    },
+    "sourceUrl": "",
+    "confidence": "C",
+    "auditedAt": "2026-08-03"
+  },
   "193852": {
+    "schedule": {
+      "mon": [],
+      "tue": [],
+      "wed": [],
+      "thu": [],
+      "fri": [],
+      "sat": [],
+      "sun": []
+    },
+    "sourceUrl": "",
+    "confidence": "C",
+    "auditedAt": "2026-08-03"
+  },
+  "204726": {
+    "schedule": {
+      "mon": [],
+      "tue": [],
+      "wed": [],
+      "thu": [],
+      "fri": [],
+      "sat": [],
+      "sun": []
+    },
+    "sourceUrl": "",
+    "confidence": "C",
+    "auditedAt": "2026-08-03"
+  },
+  "134935": {
+    "schedule": {
+      "mon": [],
+      "tue": [],
+      "wed": [],
+      "thu": [],
+      "fri": [],
+      "sat": [],
+      "sun": []
+    },
+    "sourceUrl": "",
+    "confidence": "C",
+    "auditedAt": "2026-08-03"
+  },
+  "240294": {
+    "schedule": {
+      "mon": [],
+      "tue": [],
+      "wed": [],
+      "thu": [],
+      "fri": [],
+      "sat": [],
+      "sun": []
+    },
+    "sourceUrl": "",
+    "confidence": "C",
+    "auditedAt": "2026-08-03"
+  },
+  "134946": {
     "schedule": {
       "mon": [],
       "tue": [],
@@ -4700,6 +5490,20 @@
     "confidence": "C",
     "auditedAt": "2026-08-03"
   },
+  "246859": {
+    "schedule": {
+      "mon": [],
+      "tue": [],
+      "wed": [],
+      "thu": [],
+      "fri": [],
+      "sat": [],
+      "sun": []
+    },
+    "sourceUrl": "",
+    "confidence": "C",
+    "auditedAt": "2026-08-03"
+  },
   "262686": {
     "schedule": {
       "mon": [],
@@ -4770,6 +5574,34 @@
     "confidence": "C",
     "auditedAt": "2026-08-03"
   },
+  "210991": {
+    "schedule": {
+      "mon": [],
+      "tue": [],
+      "wed": [],
+      "thu": [],
+      "fri": [],
+      "sat": [],
+      "sun": []
+    },
+    "sourceUrl": "",
+    "confidence": "C",
+    "auditedAt": "2026-08-03"
+  },
+  "135540": {
+    "schedule": {
+      "mon": [],
+      "tue": [],
+      "wed": [],
+      "thu": [],
+      "fri": [],
+      "sat": [],
+      "sun": []
+    },
+    "sourceUrl": "",
+    "confidence": "C",
+    "auditedAt": "2026-08-03"
+  },
   "136001": {
     "schedule": {
       "mon": [],
@@ -4785,6 +5617,62 @@
     "auditedAt": "2026-08-03"
   },
   "136002": {
+    "schedule": {
+      "mon": [],
+      "tue": [],
+      "wed": [],
+      "thu": [],
+      "fri": [],
+      "sat": [],
+      "sun": []
+    },
+    "sourceUrl": "",
+    "confidence": "C",
+    "auditedAt": "2026-08-03"
+  },
+  "248101": {
+    "schedule": {
+      "mon": [],
+      "tue": [],
+      "wed": [],
+      "thu": [],
+      "fri": [],
+      "sat": [],
+      "sun": []
+    },
+    "sourceUrl": "",
+    "confidence": "C",
+    "auditedAt": "2026-08-03"
+  },
+  "207660": {
+    "schedule": {
+      "mon": [],
+      "tue": [],
+      "wed": [],
+      "thu": [],
+      "fri": [],
+      "sat": [],
+      "sun": []
+    },
+    "sourceUrl": "",
+    "confidence": "C",
+    "auditedAt": "2026-08-03"
+  },
+  "240918": {
+    "schedule": {
+      "mon": [],
+      "tue": [],
+      "wed": [],
+      "thu": [],
+      "fri": [],
+      "sat": [],
+      "sun": []
+    },
+    "sourceUrl": "",
+    "confidence": "C",
+    "auditedAt": "2026-08-03"
+  },
+  "210404": {
     "schedule": {
       "mon": [],
       "tue": [],
@@ -4840,6 +5728,20 @@
     "confidence": "C",
     "auditedAt": "2026-08-03"
   },
+  "241532": {
+    "schedule": {
+      "mon": [],
+      "tue": [],
+      "wed": [],
+      "thu": [],
+      "fri": [],
+      "sat": [],
+      "sun": []
+    },
+    "sourceUrl": "",
+    "confidence": "C",
+    "auditedAt": "2026-08-03"
+  },
   "134914": {
     "schedule": {
       "mon": [],
@@ -4869,6 +5771,20 @@
     "auditedAt": "2026-08-03"
   },
   "211871": {
+    "schedule": {
+      "mon": [],
+      "tue": [],
+      "wed": [],
+      "thu": [],
+      "fri": [],
+      "sat": [],
+      "sun": []
+    },
+    "sourceUrl": "",
+    "confidence": "C",
+    "auditedAt": "2026-08-03"
+  },
+  "135064": {
     "schedule": {
       "mon": [],
       "tue": [],
@@ -4924,6 +5840,20 @@
     "confidence": "C",
     "auditedAt": "2026-08-03"
   },
+  "193849": {
+    "schedule": {
+      "mon": [],
+      "tue": [],
+      "wed": [],
+      "thu": [],
+      "fri": [],
+      "sat": [],
+      "sun": []
+    },
+    "sourceUrl": "",
+    "confidence": "C",
+    "auditedAt": "2026-08-03"
+  },
   "136042": {
     "schedule": {
       "mon": [],
@@ -4966,6 +5896,34 @@
     "confidence": "C",
     "auditedAt": "2026-08-03"
   },
+  "135072": {
+    "schedule": {
+      "mon": [],
+      "tue": [],
+      "wed": [],
+      "thu": [],
+      "fri": [],
+      "sat": [],
+      "sun": []
+    },
+    "sourceUrl": "",
+    "confidence": "C",
+    "auditedAt": "2026-08-03"
+  },
+  "240924": {
+    "schedule": {
+      "mon": [],
+      "tue": [],
+      "wed": [],
+      "thu": [],
+      "fri": [],
+      "sat": [],
+      "sun": []
+    },
+    "sourceUrl": "",
+    "confidence": "C",
+    "auditedAt": "2026-08-03"
+  },
   "261157": {
     "schedule": {
       "mon": [],
@@ -4980,7 +5938,63 @@
     "confidence": "C",
     "auditedAt": "2026-08-03"
   },
+  "238613": {
+    "schedule": {
+      "mon": [],
+      "tue": [],
+      "wed": [],
+      "thu": [],
+      "fri": [],
+      "sat": [],
+      "sun": []
+    },
+    "sourceUrl": "",
+    "confidence": "C",
+    "auditedAt": "2026-08-03"
+  },
+  "135410": {
+    "schedule": {
+      "mon": [],
+      "tue": [],
+      "wed": [],
+      "thu": [],
+      "fri": [],
+      "sat": [],
+      "sun": []
+    },
+    "sourceUrl": "",
+    "confidence": "C",
+    "auditedAt": "2026-08-03"
+  },
   "135518": {
+    "schedule": {
+      "mon": [],
+      "tue": [],
+      "wed": [],
+      "thu": [],
+      "fri": [],
+      "sat": [],
+      "sun": []
+    },
+    "sourceUrl": "",
+    "confidence": "C",
+    "auditedAt": "2026-08-03"
+  },
+  "135148": {
+    "schedule": {
+      "mon": [],
+      "tue": [],
+      "wed": [],
+      "thu": [],
+      "fri": [],
+      "sat": [],
+      "sun": []
+    },
+    "sourceUrl": "",
+    "confidence": "C",
+    "auditedAt": "2026-08-03"
+  },
+  "244547": {
     "schedule": {
       "mon": [],
       "tue": [],
@@ -5023,6 +6037,76 @@
     "auditedAt": "2026-08-03"
   },
   "135752": {
+    "schedule": {
+      "mon": [],
+      "tue": [],
+      "wed": [],
+      "thu": [],
+      "fri": [],
+      "sat": [],
+      "sun": []
+    },
+    "sourceUrl": "",
+    "confidence": "C",
+    "auditedAt": "2026-08-03"
+  },
+  "135744": {
+    "schedule": {
+      "mon": [],
+      "tue": [],
+      "wed": [],
+      "thu": [],
+      "fri": [],
+      "sat": [],
+      "sun": []
+    },
+    "sourceUrl": "",
+    "confidence": "C",
+    "auditedAt": "2026-08-03"
+  },
+  "224120": {
+    "schedule": {
+      "mon": [],
+      "tue": [],
+      "wed": [],
+      "thu": [],
+      "fri": [],
+      "sat": [],
+      "sun": []
+    },
+    "sourceUrl": "",
+    "confidence": "C",
+    "auditedAt": "2026-08-03"
+  },
+  "208047": {
+    "schedule": {
+      "mon": [],
+      "tue": [],
+      "wed": [],
+      "thu": [],
+      "fri": [],
+      "sat": [],
+      "sun": []
+    },
+    "sourceUrl": "",
+    "confidence": "C",
+    "auditedAt": "2026-08-03"
+  },
+  "223072": {
+    "schedule": {
+      "mon": [],
+      "tue": [],
+      "wed": [],
+      "thu": [],
+      "fri": [],
+      "sat": [],
+      "sun": []
+    },
+    "sourceUrl": "",
+    "confidence": "C",
+    "auditedAt": "2026-08-03"
+  },
+  "261684": {
     "schedule": {
       "mon": [],
       "tue": [],
@@ -5090,6 +6174,32 @@
     },
     "sourceUrl": "",
     "confidence": "C",
+    "auditedAt": "2026-08-03"
+  },
+  "192460": {
+    "schedule": {
+      "mon": [
+        "08:00–12:00",
+        "13:00–17:00"
+      ],
+      "tue": [
+        "08:00–13:00"
+      ],
+      "wed": [
+        "08:00–12:00",
+        "13:00–15:00"
+      ],
+      "thu": [
+        "08:00–13:00"
+      ],
+      "fri": [
+        "08:00–12:00"
+      ],
+      "sat": [],
+      "sun": []
+    },
+    "sourceUrl": "https://www.firmy.cz/detail/2575417-absolute-motion-s-r-o-mudr-daniel-hosek-cheb.html",
+    "confidence": "A",
     "auditedAt": "2026-08-03"
   },
   "240592": {
@@ -5248,6 +6358,34 @@
     "confidence": "C",
     "auditedAt": "2026-08-03"
   },
+  "209916": {
+    "schedule": {
+      "mon": [
+        "08:30–12:00",
+        "13:00–15:30"
+      ],
+      "tue": [
+        "08:30–12:00",
+        "13:00–15:30"
+      ],
+      "wed": [
+        "08:30–12:00",
+        "13:00–15:30"
+      ],
+      "thu": [
+        "08:30–12:00",
+        "13:00–15:30"
+      ],
+      "fri": [
+        "08:00–14:00"
+      ],
+      "sat": [],
+      "sun": []
+    },
+    "sourceUrl": "https://www.firmy.cz/detail/13314041-cardiocare-kardiologicka-ambulance-karlovy-vary.html",
+    "confidence": "A",
+    "auditedAt": "2026-08-03"
+  },
   "135870": {
     "schedule": {
       "mon": [],
@@ -5340,7 +6478,59 @@
     "confidence": "A",
     "auditedAt": "2026-08-03"
   },
+  "206932": {
+    "schedule": {
+      "mon": [
+        "08:30–12:00"
+      ],
+      "tue": [
+        "08:30–15:00"
+      ],
+      "wed": [
+        "08:30–15:00"
+      ],
+      "thu": [
+        "08:30–15:00"
+      ],
+      "fri": [
+        "08:30–14:00"
+      ],
+      "sat": [],
+      "sun": []
+    },
+    "sourceUrl": "https://www.firmy.cz/detail/13278087-kardiologie-karlovy-vary-s-r-o-cheb.html",
+    "confidence": "B",
+    "auditedAt": "2026-08-03"
+  },
+  "135008": {
+    "schedule": {
+      "mon": [],
+      "tue": [],
+      "wed": [],
+      "thu": [],
+      "fri": [],
+      "sat": [],
+      "sun": []
+    },
+    "sourceUrl": "",
+    "confidence": "C",
+    "auditedAt": "2026-08-03"
+  },
   "191064": {
+    "schedule": {
+      "mon": [],
+      "tue": [],
+      "wed": [],
+      "thu": [],
+      "fri": [],
+      "sat": [],
+      "sun": []
+    },
+    "sourceUrl": "",
+    "confidence": "C",
+    "auditedAt": "2026-08-03"
+  },
+  "134937": {
     "schedule": {
       "mon": [],
       "tue": [],
@@ -5420,6 +6610,48 @@
     "confidence": "C",
     "auditedAt": "2026-08-03"
   },
+  "248779": {
+    "schedule": {
+      "mon": [],
+      "tue": [],
+      "wed": [],
+      "thu": [],
+      "fri": [],
+      "sat": [],
+      "sun": []
+    },
+    "sourceUrl": "",
+    "confidence": "C",
+    "auditedAt": "2026-08-03"
+  },
+  "134910": {
+    "schedule": {
+      "mon": [],
+      "tue": [],
+      "wed": [],
+      "thu": [],
+      "fri": [],
+      "sat": [],
+      "sun": []
+    },
+    "sourceUrl": "",
+    "confidence": "C",
+    "auditedAt": "2026-08-03"
+  },
+  "223294": {
+    "schedule": {
+      "mon": [],
+      "tue": [],
+      "wed": [],
+      "thu": [],
+      "fri": [],
+      "sat": [],
+      "sun": []
+    },
+    "sourceUrl": "",
+    "confidence": "C",
+    "auditedAt": "2026-08-03"
+  },
   "135688": {
     "schedule": {
       "mon": [],
@@ -5466,6 +6698,20 @@
     "confidence": "C",
     "auditedAt": "2026-08-03"
   },
+  "248780": {
+    "schedule": {
+      "mon": [],
+      "tue": [],
+      "wed": [],
+      "thu": [],
+      "fri": [],
+      "sat": [],
+      "sun": []
+    },
+    "sourceUrl": "",
+    "confidence": "C",
+    "auditedAt": "2026-08-03"
+  },
   "262180": {
     "schedule": {
       "mon": [
@@ -5493,6 +6739,62 @@
     },
     "sourceUrl": "https://www.firmy.cz/detail/14036333-ortodoncie-sobol-cheb.html",
     "confidence": "A",
+    "auditedAt": "2026-08-03"
+  },
+  "135931": {
+    "schedule": {
+      "mon": [],
+      "tue": [],
+      "wed": [],
+      "thu": [],
+      "fri": [],
+      "sat": [],
+      "sun": []
+    },
+    "sourceUrl": "",
+    "confidence": "C",
+    "auditedAt": "2026-08-03"
+  },
+  "259662": {
+    "schedule": {
+      "mon": [],
+      "tue": [],
+      "wed": [],
+      "thu": [],
+      "fri": [],
+      "sat": [],
+      "sun": []
+    },
+    "sourceUrl": "",
+    "confidence": "C",
+    "auditedAt": "2026-08-03"
+  },
+  "224775": {
+    "schedule": {
+      "mon": [],
+      "tue": [],
+      "wed": [],
+      "thu": [],
+      "fri": [],
+      "sat": [],
+      "sun": []
+    },
+    "sourceUrl": "",
+    "confidence": "C",
+    "auditedAt": "2026-08-03"
+  },
+  "224774": {
+    "schedule": {
+      "mon": [],
+      "tue": [],
+      "wed": [],
+      "thu": [],
+      "fri": [],
+      "sat": [],
+      "sun": []
+    },
+    "sourceUrl": "",
+    "confidence": "C",
     "auditedAt": "2026-08-03"
   },
   "225466": {
@@ -5599,6 +6901,90 @@
     "confidence": "A",
     "auditedAt": "2026-08-03"
   },
+  "207316": {
+    "schedule": {
+      "mon": [
+        "10:00–18:00"
+      ],
+      "tue": [
+        "10:00–18:00"
+      ],
+      "wed": [
+        "10:00–18:00"
+      ],
+      "thu": [
+        "10:00–18:00"
+      ],
+      "fri": [
+        "10:00–18:00"
+      ],
+      "sat": [
+        "10:00–14:00"
+      ],
+      "sun": [
+        "10:00–14:00"
+      ]
+    },
+    "sourceUrl": "https://www.firmy.cz/detail/221451-asklepion-lasercentrum-karlovy-vary-karlovy-vary.html",
+    "confidence": "A",
+    "auditedAt": "2026-08-03"
+  },
+  "244001": {
+    "schedule": {
+      "mon": [
+        "10:00–18:00"
+      ],
+      "tue": [
+        "10:00–18:00"
+      ],
+      "wed": [
+        "10:00–18:00"
+      ],
+      "thu": [
+        "10:00–18:00"
+      ],
+      "fri": [
+        "10:00–18:00"
+      ],
+      "sat": [
+        "10:00–14:00"
+      ],
+      "sun": [
+        "10:00–14:00"
+      ]
+    },
+    "sourceUrl": "https://www.firmy.cz/detail/221451-asklepion-lasercentrum-karlovy-vary-karlovy-vary.html",
+    "confidence": "A",
+    "auditedAt": "2026-08-03"
+  },
+  "248777": {
+    "schedule": {
+      "mon": [],
+      "tue": [],
+      "wed": [],
+      "thu": [],
+      "fri": [],
+      "sat": [],
+      "sun": []
+    },
+    "sourceUrl": "",
+    "confidence": "C",
+    "auditedAt": "2026-08-03"
+  },
+  "248778": {
+    "schedule": {
+      "mon": [],
+      "tue": [],
+      "wed": [],
+      "thu": [],
+      "fri": [],
+      "sat": [],
+      "sun": []
+    },
+    "sourceUrl": "",
+    "confidence": "C",
+    "auditedAt": "2026-08-03"
+  },
   "192320": {
     "schedule": {
       "mon": [
@@ -5645,6 +7031,20 @@
     },
     "sourceUrl": "https://www.firmy.cz/detail/2562194-gynekologicka-ambulance-karlovarska-krajska-nemocnice-karlovy-vary.html",
     "confidence": "A",
+    "auditedAt": "2026-08-03"
+  },
+  "135665": {
+    "schedule": {
+      "mon": [],
+      "tue": [],
+      "wed": [],
+      "thu": [],
+      "fri": [],
+      "sat": [],
+      "sun": []
+    },
+    "sourceUrl": "",
+    "confidence": "C",
     "auditedAt": "2026-08-03"
   },
   "211890": {
@@ -5713,6 +7113,59 @@
     "confidence": "B",
     "auditedAt": "2026-08-03"
   },
+  "135655": {
+    "schedule": {
+      "mon": [
+        "08:00–16:00"
+      ],
+      "tue": [
+        "08:00–17:00"
+      ],
+      "wed": [
+        "08:00–17:00"
+      ],
+      "thu": [
+        "08:00–17:00"
+      ],
+      "fri": [
+        "08:00–16:00"
+      ],
+      "sat": [],
+      "sun": []
+    },
+    "sourceUrl": "https://www.firmy.cz/detail/221454-asklepion-lasercentrum-marianske-lazne-marianske-lazne.html",
+    "confidence": "A",
+    "auditedAt": "2026-08-03"
+  },
+  "135194": {
+    "schedule": {
+      "mon": [
+        "09:00–12:30",
+        "13:00–17:00"
+      ],
+      "tue": [
+        "09:00–12:30",
+        "13:00–18:00"
+      ],
+      "wed": [
+        "09:00–12:30",
+        "13:00–17:00"
+      ],
+      "thu": [
+        "09:00–12:30",
+        "13:00–18:00"
+      ],
+      "fri": [
+        "09:00–12:30",
+        "13:00–17:00"
+      ],
+      "sat": [],
+      "sun": []
+    },
+    "sourceUrl": "https://www.firmy.cz/detail/13286763-elen-optik-s-r-o-marianske-lazne.html",
+    "confidence": "A",
+    "auditedAt": "2026-08-03"
+  },
   "224189": {
     "schedule": {
       "mon": [],
@@ -5725,6 +7178,30 @@
     },
     "sourceUrl": "",
     "confidence": "C",
+    "auditedAt": "2026-08-03"
+  },
+  "239060": {
+    "schedule": {
+      "mon": [
+        "07:30–16:30"
+      ],
+      "tue": [
+        "07:00–16:00"
+      ],
+      "wed": [
+        "07:30–15:30"
+      ],
+      "thu": [
+        "08:00–12:00"
+      ],
+      "fri": [
+        "07:00–14:00"
+      ],
+      "sat": [],
+      "sun": []
+    },
+    "sourceUrl": "https://ortopedie-makki.cz/",
+    "confidence": "A",
     "auditedAt": "2026-08-03"
   },
   "135451": {
@@ -5741,7 +7218,49 @@
     "confidence": "C",
     "auditedAt": "2026-08-03"
   },
+  "240213": {
+    "schedule": {
+      "mon": [],
+      "tue": [],
+      "wed": [],
+      "thu": [],
+      "fri": [],
+      "sat": [],
+      "sun": []
+    },
+    "sourceUrl": "",
+    "confidence": "C",
+    "auditedAt": "2026-08-03"
+  },
+  "244016": {
+    "schedule": {
+      "mon": [],
+      "tue": [],
+      "wed": [],
+      "thu": [],
+      "fri": [],
+      "sat": [],
+      "sun": []
+    },
+    "sourceUrl": "",
+    "confidence": "C",
+    "auditedAt": "2026-08-03"
+  },
   "193841": {
+    "schedule": {
+      "mon": [],
+      "tue": [],
+      "wed": [],
+      "thu": [],
+      "fri": [],
+      "sat": [],
+      "sun": []
+    },
+    "sourceUrl": "",
+    "confidence": "C",
+    "auditedAt": "2026-08-03"
+  },
+  "248593": {
     "schedule": {
       "mon": [],
       "tue": [],
@@ -5783,6 +7302,20 @@
     "confidence": "A",
     "auditedAt": "2026-08-03"
   },
+  "225957": {
+    "schedule": {
+      "mon": [],
+      "tue": [],
+      "wed": [],
+      "thu": [],
+      "fri": [],
+      "sat": [],
+      "sun": []
+    },
+    "sourceUrl": "",
+    "confidence": "C",
+    "auditedAt": "2026-08-03"
+  },
   "135955": {
     "schedule": {
       "mon": [],
@@ -5798,6 +7331,20 @@
     "auditedAt": "2026-08-03"
   },
   "225024": {
+    "schedule": {
+      "mon": [],
+      "tue": [],
+      "wed": [],
+      "thu": [],
+      "fri": [],
+      "sat": [],
+      "sun": []
+    },
+    "sourceUrl": "",
+    "confidence": "C",
+    "auditedAt": "2026-08-03"
+  },
+  "135932": {
     "schedule": {
       "mon": [],
       "tue": [],
@@ -5865,6 +7412,83 @@
     },
     "sourceUrl": "",
     "confidence": "C",
+    "auditedAt": "2026-08-03"
+  },
+  "136036": {
+    "schedule": {
+      "mon": [],
+      "tue": [],
+      "wed": [],
+      "thu": [],
+      "fri": [],
+      "sat": [],
+      "sun": []
+    },
+    "sourceUrl": "",
+    "confidence": "C",
+    "auditedAt": "2026-08-03"
+  },
+  "192317": {
+    "schedule": {
+      "mon": [],
+      "tue": [],
+      "wed": [],
+      "thu": [],
+      "fri": [],
+      "sat": [],
+      "sun": []
+    },
+    "sourceUrl": "https://www.firmy.cz/detail/12956352-derma-medical-clinic-karlovy-vary.html",
+    "confidence": "A",
+    "auditedAt": "2026-08-03"
+  },
+  "135960": {
+    "schedule": {
+      "mon": [],
+      "tue": [
+        "07:00–12:30",
+        "13:00–15:00"
+      ],
+      "wed": [
+        "07:00–10:30"
+      ],
+      "thu": [
+        "07:00–12:30",
+        "13:00–15:00"
+      ],
+      "fri": [
+        "07:00–12:30",
+        "13:00–15:00"
+      ],
+      "sat": [],
+      "sun": []
+    },
+    "sourceUrl": "https://www.firmy.cz/detail/13267111-mudr-ivana-holzhauserova-karlovy-vary.html",
+    "confidence": "A",
+    "auditedAt": "2026-08-03"
+  },
+  "135521": {
+    "schedule": {
+      "mon": [
+        "07:00–15:30"
+      ],
+      "tue": [
+        "07:00–15:30"
+      ],
+      "wed": [
+        "07:00–15:30"
+      ],
+      "thu": [
+        "07:00–15:30"
+      ],
+      "fri": [
+        "07:00–15:30"
+      ],
+      "sat": [],
+      "sun": []
+    },
+    "sourceUrl": "https://www.firmy.cz/detail/2562194-gynekologicka-ambulance-karlovarska-krajska-nemocnice-karlovy-vary.html",
+    "confidence": "A",
     "auditedAt": "2026-08-03"
   },
   "135417": {
@@ -6013,6 +7637,20 @@
     "confidence": "C",
     "auditedAt": "2026-08-03"
   },
+  "239504": {
+    "schedule": {
+      "mon": [],
+      "tue": [],
+      "wed": [],
+      "thu": [],
+      "fri": [],
+      "sat": [],
+      "sun": []
+    },
+    "sourceUrl": "",
+    "confidence": "C",
+    "auditedAt": "2026-08-03"
+  },
   "135419": {
     "schedule": {
       "mon": [],
@@ -6083,6 +7721,30 @@
     "confidence": "C",
     "auditedAt": "2026-08-03"
   },
+  "135095": {
+    "schedule": {
+      "mon": [
+        "09:30–16:30"
+      ],
+      "tue": [
+        "07:30–13:15"
+      ],
+      "wed": [
+        "07:30–13:15"
+      ],
+      "thu": [
+        "07:30–13:15"
+      ],
+      "fri": [
+        "07:30–13:15"
+      ],
+      "sat": [],
+      "sun": []
+    },
+    "sourceUrl": "https://www.firmy.cz/detail/12978504-ocni-ambulance-mudr-tomanova-sokolov.html",
+    "confidence": "A",
+    "auditedAt": "2026-08-03"
+  },
   "135017": {
     "schedule": {
       "mon": [],
@@ -6145,6 +7807,20 @@
     "confidence": "A",
     "auditedAt": "2026-08-03"
   },
+  "134990": {
+    "schedule": {
+      "mon": [],
+      "tue": [],
+      "wed": [],
+      "thu": [],
+      "fri": [],
+      "sat": [],
+      "sun": []
+    },
+    "sourceUrl": "",
+    "confidence": "C",
+    "auditedAt": "2026-08-03"
+  },
   "135083": {
     "schedule": {
       "mon": [],
@@ -6194,6 +7870,34 @@
       "sun": []
     },
     "sourceUrl": "https://www.firmy.cz/detail/2555205-penta-hospitals-nemocnice-ostrov-rehabilitacni-ambulance-ostrov.html",
+    "confidence": "A",
+    "auditedAt": "2026-08-03"
+  },
+  "244388": {
+    "schedule": {
+      "mon": [
+        "07:00–11:45",
+        "12:30–14:30"
+      ],
+      "tue": [
+        "07:00–11:45",
+        "12:30–14:30"
+      ],
+      "wed": [
+        "07:00–11:45",
+        "12:30–14:30"
+      ],
+      "thu": [
+        "07:00–11:45",
+        "12:30–14:30"
+      ],
+      "fri": [
+        "07:00–12:00"
+      ],
+      "sat": [],
+      "sun": []
+    },
+    "sourceUrl": "https://www.firmy.cz/detail/13663631-prosrdicko-s-r-o-ostrov.html",
     "confidence": "A",
     "auditedAt": "2026-08-03"
   },
@@ -6267,6 +7971,20 @@
     "confidence": "C",
     "auditedAt": "2026-08-03"
   },
+  "245006": {
+    "schedule": {
+      "mon": [],
+      "tue": [],
+      "wed": [],
+      "thu": [],
+      "fri": [],
+      "sat": [],
+      "sun": []
+    },
+    "sourceUrl": "",
+    "confidence": "C",
+    "auditedAt": "2026-08-03"
+  },
   "247191": {
     "schedule": {
       "mon": [],
@@ -6282,6 +8000,20 @@
     "auditedAt": "2026-08-03"
   },
   "135750": {
+    "schedule": {
+      "mon": [],
+      "tue": [],
+      "wed": [],
+      "thu": [],
+      "fri": [],
+      "sat": [],
+      "sun": []
+    },
+    "sourceUrl": "",
+    "confidence": "C",
+    "auditedAt": "2026-08-03"
+  },
+  "135308": {
     "schedule": {
       "mon": [],
       "tue": [],
@@ -6347,7 +8079,49 @@
     "confidence": "C",
     "auditedAt": "2026-08-03"
   },
+  "241039": {
+    "schedule": {
+      "mon": [],
+      "tue": [],
+      "wed": [],
+      "thu": [],
+      "fri": [],
+      "sat": [],
+      "sun": []
+    },
+    "sourceUrl": "",
+    "confidence": "C",
+    "auditedAt": "2026-08-03"
+  },
+  "247189": {
+    "schedule": {
+      "mon": [],
+      "tue": [],
+      "wed": [],
+      "thu": [],
+      "fri": [],
+      "sat": [],
+      "sun": []
+    },
+    "sourceUrl": "",
+    "confidence": "C",
+    "auditedAt": "2026-08-03"
+  },
   "247193": {
+    "schedule": {
+      "mon": [],
+      "tue": [],
+      "wed": [],
+      "thu": [],
+      "fri": [],
+      "sat": [],
+      "sun": []
+    },
+    "sourceUrl": "",
+    "confidence": "C",
+    "auditedAt": "2026-08-03"
+  },
+  "135136": {
     "schedule": {
       "mon": [],
       "tue": [],
@@ -6387,6 +8161,54 @@
     },
     "sourceUrl": "",
     "confidence": "C",
+    "auditedAt": "2026-08-03"
+  },
+  "134962": {
+    "schedule": {
+      "mon": [
+        "08:30–13:30"
+      ],
+      "tue": [
+        "08:30–13:30"
+      ],
+      "wed": [
+        "08:30–13:30"
+      ],
+      "thu": [
+        "08:30–13:30"
+      ],
+      "fri": [
+        "08:30–13:30"
+      ],
+      "sat": [],
+      "sun": []
+    },
+    "sourceUrl": "https://www.firmy.cz/detail/1887902-ofta-s-r-o-centrum-mikrochirurgie-oka-cheb.html",
+    "confidence": "A",
+    "auditedAt": "2026-08-03"
+  },
+  "261383": {
+    "schedule": {
+      "mon": [
+        "08:30–18:00"
+      ],
+      "tue": [
+        "08:30–18:00"
+      ],
+      "wed": [
+        "08:30–18:00"
+      ],
+      "thu": [
+        "08:30–18:00"
+      ],
+      "fri": [
+        "08:30–18:00"
+      ],
+      "sat": [],
+      "sun": []
+    },
+    "sourceUrl": "https://www.firmy.cz/detail/13938225-lita-plus-ortopedie-a-fyzioterapie-karlovy-vary.html",
+    "confidence": "A",
     "auditedAt": "2026-08-03"
   },
   "136054": {
@@ -6586,6 +8408,34 @@
     "auditedAt": "2026-08-03"
   },
   "243660": {
+    "schedule": {
+      "mon": [
+        "08:00–20:00"
+      ],
+      "tue": [
+        "08:00–20:00"
+      ],
+      "wed": [
+        "08:00–20:00"
+      ],
+      "thu": [
+        "08:00–20:00"
+      ],
+      "fri": [
+        "08:00–20:00"
+      ],
+      "sat": [
+        "08:00–20:00"
+      ],
+      "sun": [
+        "08:00–20:00"
+      ]
+    },
+    "sourceUrl": "https://www.firmy.cz/detail/13324797-frantiskovy-lazne-frantiskovy-lazne.html",
+    "confidence": "A",
+    "auditedAt": "2026-08-03"
+  },
+  "261130": {
     "schedule": {
       "mon": [
         "08:00–20:00"

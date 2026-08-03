@@ -3,6 +3,8 @@ import { forbiddenClaims, objections, specialtyCopy } from "./content";
 import type { CallLog, Lead, LeadPriority, LeadStatus, Specialty } from "./types";
 
 type Page = "dashboard" | "leads" | "playbook" | "offer";
+type LeadSort = "score" | "city" | "webOpportunity" | "followUp";
+type LeadSignal = "Vše" | "contactable" | "noWeb" | "hasHours" | "medvision";
 
 const STORAGE_KEY = "velyos-doctors-crm-v1";
 const PROFILE_KEY = "velyos-doctors-profile-v1";
@@ -80,12 +82,38 @@ function displayDate(value: string, withTime = false) {
 }
 
 function websiteLabel(web: string) {
-  return web.replace(/^https?:\/\//, "").replace(/\/$/, "");
+  try {
+    const url = new URL(websiteUrl(web));
+    const path = url.pathname === "/" ? "" : url.pathname.replace(/\/$/, "");
+    return `${url.hostname.replace(/^www\./, "")}${path}`;
+  } catch {
+    return web.replace(/^https?:\/\//, "").split("?")[0].replace(/\/$/, "");
+  }
 }
 
 function websiteUrl(web: string) {
   if (!web) return "";
   return /^https?:\/\//i.test(web) ? web : `https://${web}`;
+}
+
+const weekdayKeys = ["sun", "mon", "tue", "wed", "thu", "fri", "sat"] as const;
+const weekdayLabels = { mon: "Po", tue: "Út", wed: "St", thu: "Čt", fri: "Pá", sat: "So", sun: "Ne" } as const;
+
+function hasOpeningHours(lead: Lead) {
+  return Object.values(lead.openingHours || {}).some((intervals) => intervals.length);
+}
+
+function todayOpeningHours(lead: Lead) {
+  if (!hasOpeningHours(lead)) return "Hodiny nedohledány";
+  const intervals = lead.openingHours[weekdayKeys[new Date().getDay()]] || [];
+  return intervals.length ? `Dnes ${intervals.join(", ")}` : "Dnes zavřeno";
+}
+
+function weeklyOpeningHours(lead: Lead) {
+  return (["mon", "tue", "wed", "thu", "fri", "sat", "sun"] as const)
+    .filter((day) => lead.openingHours?.[day]?.length)
+    .map((day) => `${weekdayLabels[day]} ${lead.openingHours[day].join(", ")}`)
+    .join(" · ");
 }
 
 function pilotSentence() {
@@ -104,6 +132,8 @@ function App() {
   const [specialty, setSpecialty] = useState<Specialty | "Vše">("Vše");
   const [status, setStatus] = useState<LeadStatus | "Vše">("Vše");
   const [leadPriority, setLeadPriority] = useState<LeadPriority | "Vše">("Vše");
+  const [leadSort, setLeadSort] = useState<LeadSort>("score");
+  const [leadSignal, setLeadSignal] = useState<LeadSignal>("Vše");
   const [city, setCity] = useState("Vše");
   const [profileName, setProfileName] = useState(() => localStorage.getItem(PROFILE_KEY) || "Obchodník");
   const [dataNotice, setDataNotice] = useState("");
@@ -146,7 +176,7 @@ function App() {
   const filteredLeads = useMemo(() => {
     const needle = query.toLocaleLowerCase("cs").trim();
     return leads.filter((lead) => {
-      const haystack = [lead.name, lead.provider, lead.city, lead.phone, lead.email, lead.representative]
+      const haystack = [lead.name, lead.provider, lead.city, lead.address, lead.phone, lead.email, lead.representative, lead.recommendedOffer]
         .join(" ")
         .toLocaleLowerCase("cs");
       return (
@@ -154,10 +184,20 @@ function App() {
         (specialty === "Vše" || lead.specialty === specialty) &&
         (status === "Vše" || lead.status === status) &&
         (leadPriority === "Vše" || lead.priority === leadPriority) &&
+        (leadSignal === "Vše" ||
+          (leadSignal === "contactable" && Boolean(lead.phone || lead.email)) ||
+          (leadSignal === "noWeb" && lead.webStatus !== "Aktivní vlastní web") ||
+          (leadSignal === "hasHours" && hasOpeningHours(lead)) ||
+          (leadSignal === "medvision" && lead.medvisionFitScore >= 70)) &&
         (city === "Vše" || lead.city === city)
       );
+    }).sort((a, b) => {
+      if (leadSort === "city") return a.city.localeCompare(b.city, "cs") || b.commercialScore - a.commercialScore;
+      if (leadSort === "webOpportunity") return b.webOpportunityScore - a.webOpportunityScore || b.commercialScore - a.commercialScore;
+      if (leadSort === "followUp") return (a.nextFollowUp || "9999").localeCompare(b.nextFollowUp || "9999") || b.commercialScore - a.commercialScore;
+      return b.commercialScore - a.commercialScore || a.city.localeCompare(b.city, "cs");
     });
-  }, [leads, query, specialty, status, leadPriority, city]);
+  }, [leads, query, specialty, status, leadPriority, leadSignal, city, leadSort]);
 
   const today = todayIso();
   const metrics = useMemo(() => {
@@ -209,9 +249,9 @@ function App() {
   }
 
   function exportCsv() {
-    const columns = ["ID NRPZS", "Ordinace", "Obor", "Segmenty", "Město", "Telefon", "E-mail", "Web", "Priorita", "Obchodní skóre", "Doporučená nabídka", "Stav", "Pokusy", "Poslední kontakt", "Další krok", "Poznámky"];
+    const columns = ["ID NRPZS", "Ordinace", "Obor", "Segmenty", "Město", "Adresa", "Ordinační hodiny", "Zdroj hodin", "Telefon", "E-mail", "Web", "Stav webu", "Online objednání", "Objednávací systém", "Pacientský portál", "Přijímá nové pacienty", "Priorita", "Obchodní skóre", "Web příležitost", "MEDVISION fit", "Doporučená nabídka", "Stav", "Pokusy", "Poslední kontakt", "Další krok", "Poznámky"];
     const quote = (value: unknown) => `"${String(value ?? "").replaceAll('"', '""')}"`;
-    const rows = leads.map((lead) => [lead.id, lead.name, lead.specialty, lead.segments.join("|"), lead.city, lead.phone, lead.email, lead.web, lead.priority, lead.commercialScore, lead.recommendedOffer, lead.status, lead.attempts, lead.lastContact, lead.nextFollowUp, lead.notes]);
+    const rows = leads.map((lead) => [lead.id, lead.name, lead.specialty, lead.segments.join("|"), lead.city, lead.address, weeklyOpeningHours(lead), lead.openingHoursSource, lead.phone, lead.email, lead.web, lead.webStatus, lead.onlineBooking, lead.bookingSystem, lead.patientPortal, lead.acceptsNewPatients, lead.priority, lead.commercialScore, lead.webOpportunityScore, lead.medvisionFitScore, lead.recommendedOffer, lead.status, lead.attempts, lead.lastContact, lead.nextFollowUp, lead.notes]);
     const csv = `\uFEFF${[columns, ...rows].map((row) => row.map(quote).join(",")).join("\n")}`;
     const blob = new Blob([csv], { type: "text/csv;charset=utf-8" });
     const url = URL.createObjectURL(blob);
@@ -289,6 +329,10 @@ function App() {
                 setStatus={setStatus}
                 leadPriority={leadPriority}
                 setLeadPriority={setLeadPriority}
+                leadSort={leadSort}
+                setLeadSort={setLeadSort}
+                leadSignal={leadSignal}
+                setLeadSignal={setLeadSignal}
                 city={city}
                 setCity={setCity}
                 cities={cities}
@@ -373,13 +417,19 @@ function LeadRow({ lead, index, onCall }: { lead: Lead; index: number; onCall: (
   );
 }
 
-function LeadsPage({ leads, total, query, setQuery, specialty, setSpecialty, status, setStatus, leadPriority, setLeadPriority, city, setCity, cities, onCall }: {
+function LeadsPage({ leads, total, query, setQuery, specialty, setSpecialty, status, setStatus, leadPriority, setLeadPriority, leadSort, setLeadSort, leadSignal, setLeadSignal, city, setCity, cities, onCall }: {
   leads: Lead[]; total: number; query: string; setQuery: (value: string) => void;
   specialty: Specialty | "Vše"; setSpecialty: (value: Specialty | "Vše") => void;
   status: LeadStatus | "Vše"; setStatus: (value: LeadStatus | "Vše") => void;
   leadPriority: LeadPriority | "Vše"; setLeadPriority: (value: LeadPriority | "Vše") => void;
+  leadSort: LeadSort; setLeadSort: (value: LeadSort) => void;
+  leadSignal: LeadSignal; setLeadSignal: (value: LeadSignal) => void;
   city: string; setCity: (value: string) => void; cities: string[]; onCall: (id: string) => void;
 }) {
+  const contactable = leads.filter((lead) => lead.phone || lead.email).length;
+  const withoutWeb = leads.filter((lead) => lead.webStatus !== "Aktivní vlastní web").length;
+  const priorityA = leads.filter((lead) => lead.priority === "A").length;
+  const withHours = leads.filter(hasOpeningHours).length;
   return (
     <div className="page">
       <section className="page-title"><p className="eyebrow">DATABÁZE ORDINACÍ</p><h1>Kontakty</h1><p>{leads.length} z {total} kontaktů odpovídá filtrům.</p></section>
@@ -389,19 +439,29 @@ function LeadsPage({ leads, total, query, setQuery, specialty, setSpecialty, sta
         <label><span>Priorita</span><select value={leadPriority} onChange={(event) => setLeadPriority(event.target.value as LeadPriority | "Vše")}><option>Vše</option>{leadPriorities.map((value) => <option key={value}>{value}</option>)}</select></label>
         <label><span>Stav</span><select value={status} onChange={(event) => setStatus(event.target.value as LeadStatus | "Vše")}><option>Vše</option>{statuses.map((value) => <option key={value}>{value}</option>)}</select></label>
         <label><span>Město</span><select value={city} onChange={(event) => setCity(event.target.value)}><option>Vše</option>{cities.map((value) => <option key={value}>{value}</option>)}</select></label>
+        <label><span>Obchodní signál</span><select value={leadSignal} onChange={(event) => setLeadSignal(event.target.value as LeadSignal)}><option value="Vše">Vše</option><option value="contactable">Má kontakt</option><option value="noWeb">Bez vlastního webu</option><option value="hasHours">Má ordinační hodiny</option><option value="medvision">MEDVISION fit 70+</option></select></label>
+        <label><span>Řazení</span><select value={leadSort} onChange={(event) => setLeadSort(event.target.value as LeadSort)}><option value="score">Obchodní skóre</option><option value="webOpportunity">Webová příležitost</option><option value="city">Město</option><option value="followUp">Další kontakt</option></select></label>
+      </section>
+      <section className="lead-overview" aria-label="Souhrn vyfiltrovaných kontaktů">
+        <article><strong>{priorityA}</strong><span>priorita A</span></article>
+        <article><strong>{contactable}</strong><span>má telefon nebo e-mail</span></article>
+        <article><strong>{withoutWeb}</strong><span>bez aktivního vlastního webu</span></article>
+        <article><strong>{withHours}</strong><span>dohledané ordinační hodiny</span></article>
       </section>
       <section className="leads-table-wrap">
         <table className="leads-table">
-          <thead><tr><th>Ordinace</th><th>Kontakt</th><th>Digitální stav</th><th>Priorita</th><th>Stav</th><th>Další krok</th><th /></tr></thead>
+          <colgroup><col className="col-practice" /><col className="col-location" /><col className="col-contact" /><col className="col-hours" /><col className="col-digital" /><col className="col-opportunity" /><col className="col-crm" /><col className="col-action" /></colgroup>
+          <thead><tr><th>Ordinace</th><th>Město a adresa</th><th>Kontakt</th><th>Kdy volat</th><th>Digitální stav</th><th>Příležitost</th><th>CRM stav</th><th /></tr></thead>
           <tbody>
             {leads.map((lead) => (
               <tr key={lead.id}>
-                <td><strong>{lead.name}</strong><span>{lead.specialty} · {lead.city}</span></td>
+                <td><strong>{lead.name}</strong><span>{lead.specialty} · {lead.targetType}</span></td>
+                <td><strong>{lead.city}</strong><span title={lead.address}>{lead.address || lead.district}</span>{lead.googleMapsUrl && <a className="micro-link" href={lead.googleMapsUrl} target="_blank" rel="noreferrer">Mapa ↗</a>}</td>
                 <td><a href={lead.phone ? `tel:${lead.phone.replace(/\s/g, "")}` : undefined}>{lead.phone || "Bez telefonu"}</a><span>{lead.email || lead.representative || "—"}</span></td>
-                <td>{lead.web ? <a href={websiteUrl(lead.web)} target="_blank" rel="noreferrer">{websiteLabel(lead.web)}</a> : <span className="web-opportunity">Bez vlastního webu</span>}<span>{lead.digitalStatus} · {lead.digitalScore}/10</span></td>
-                <td><strong className={`priority-badge priority-${lead.priority.toLowerCase()}`}>{lead.priority}</strong><span>{lead.commercialScore}/100 · {lead.recommendedOffer}</span></td>
-                <td><StatusPill status={lead.status} /></td>
-                <td>{lead.nextFollowUp ? displayDate(lead.nextFollowUp, true) : lead.lastContact ? `Naposledy ${displayDate(lead.lastContact)}` : "—"}</td>
+                <td className="hours-cell">{hasOpeningHours(lead) ? <details><summary>{todayOpeningHours(lead)}</summary><span>{weeklyOpeningHours(lead)}</span>{lead.openingHoursSource && <a href={lead.openingHoursSource} target="_blank" rel="noreferrer">Ověřit zdroj ↗</a>}</details> : <><span className="hours-missing">Nedohledáno</span>{lead.mapProfileUrl && <a className="micro-link" href={lead.mapProfileUrl} target="_blank" rel="noreferrer">Ověřit profil ↗</a>}</>}</td>
+                <td className="digital-cell">{lead.web ? <a title={lead.web} href={websiteUrl(lead.web)} target="_blank" rel="noreferrer">{websiteLabel(lead.web)}</a> : <span className="web-opportunity">Bez vlastního webu</span>}<span>{lead.webStatus} · {lead.digitalStatus} {lead.digitalScore}/10</span><small>Objednání: {lead.onlineBooking}{lead.bookingSystem ? ` · ${lead.bookingSystem}` : ""}</small></td>
+                <td><div className="opportunity-line"><strong className={`priority-badge priority-${lead.priority.toLowerCase()}`}>{lead.priority}</strong><b>{lead.commercialScore}/100</b></div><span title={lead.recommendedOffer}>{lead.recommendedOffer}</span><small>Web {lead.webOpportunityScore} · MEDVISION {lead.medvisionFitScore}</small></td>
+                <td><StatusPill status={lead.status} /><span>{lead.nextFollowUp ? `Volat ${displayDate(lead.nextFollowUp, true)}` : lead.lastContact ? `Naposledy ${displayDate(lead.lastContact)}` : lead.recommendedNextStep}</span></td>
                 <td><button className="call-button" onClick={() => onCall(lead.id)}>Otevřít</button></td>
               </tr>
             ))}
@@ -484,7 +544,7 @@ function CallWorkspace({ lead, caller, onClose, onSave }: { lead: Lead; caller: 
               <aside className="lead-card">
                 <p className="eyebrow">KONTAKT · PRIORITA {lead.priority}</p><h3>{lead.provider}</h3>
                 <div className="lead-recommendation"><strong>{lead.recommendedOffer}</strong><span>{lead.recommendedNextStep}</span></div>
-                <dl><dt>Obor</dt><dd>{lead.specialty} <small>({lead.segments.join(" · ")})</small></dd><dt>Město</dt><dd>{lead.city}</dd><dt>Zástupce</dt><dd>{lead.representative || "Neznámý"}</dd><dt>Skóre</dt><dd><strong>{lead.commercialScore}/100</strong> · digitální {lead.digitalScore}/10</dd><dt>Web</dt><dd>{lead.web ? <a href={websiteUrl(lead.web)} target="_blank" rel="noreferrer">Otevřít web ↗</a> : <strong className="opportunity">Vlastní web nenalezen</strong>}</dd><dt>E-mail</dt><dd>{lead.email || "—"}</dd><dt>Mapy</dt><dd>{lead.googleMapsUrl ? <a href={lead.googleMapsUrl} target="_blank" rel="noreferrer">Otevřít hledání ↗</a> : "—"}</dd><dt>Pokusy</dt><dd>{lead.attempts}</dd></dl>
+                <dl><dt>Obor</dt><dd>{lead.specialty} <small>({lead.segments.join(" · ")})</small></dd><dt>Město</dt><dd>{lead.city}</dd><dt>Hodiny</dt><dd>{hasOpeningHours(lead) ? <><strong>{todayOpeningHours(lead)}</strong><small className="weekly-hours">{weeklyOpeningHours(lead)}</small></> : "Nedohledány"}</dd><dt>Zástupce</dt><dd>{lead.representative || "Neznámý"}</dd><dt>Skóre</dt><dd><strong>{lead.commercialScore}/100</strong> · digitální {lead.digitalScore}/10</dd><dt>Web</dt><dd>{lead.web ? <><a href={websiteUrl(lead.web)} target="_blank" rel="noreferrer">Otevřít web ↗</a><small className="weekly-hours">{lead.webStatus}</small></> : <strong className="opportunity">Vlastní web nenalezen</strong>}</dd><dt>Objednání</dt><dd>{lead.onlineBooking}{lead.bookingSystem ? ` · ${lead.bookingSystem}` : ""}</dd><dt>Portál</dt><dd>{lead.patientPortal}</dd><dt>Noví pacienti</dt><dd>{lead.acceptsNewPatients}</dd><dt>Jistota</dt><dd>{lead.contactConfidence}</dd><dt>E-mail</dt><dd>{lead.email || "—"}</dd><dt>Mapy</dt><dd>{lead.googleMapsUrl ? <a href={lead.googleMapsUrl} target="_blank" rel="noreferrer">Otevřít hledání ↗</a> : "—"}</dd><dt>Pokusy</dt><dd>{lead.attempts}</dd></dl>
                 <button className="primary-button full" onClick={() => setTab("record")}>Zapsat výsledek →</button>
               </aside>
             </div>

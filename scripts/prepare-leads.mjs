@@ -47,6 +47,18 @@ function number(value = "") {
   return Number.isFinite(parsed) ? parsed : 0;
 }
 
+function canonicalUrl(value = "") {
+  if (!value) return "";
+  try {
+    const url = new URL(value);
+    url.search = "";
+    url.hash = "";
+    return url.toString();
+  } catch {
+    return value.split("?")[0].split("#")[0];
+  }
+}
+
 function primarySpecialty(segments) {
   if (segments.includes("VPL")) return "Praktik";
   if (segments.includes("PLDD")) return "Pediatrie";
@@ -55,6 +67,7 @@ function primarySpecialty(segments) {
 }
 
 const raw = (await readFile(source, "utf8")).replace(/^\uFEFF/, "");
+const openingHoursByPlace = JSON.parse(await readFile(resolve("data/opening-hours.json"), "utf8"));
 const [header, ...rows] = parseCsv(raw);
 const at = Object.fromEntries(header.map((name, index) => [name, index]));
 const required = ["lead_id", "misto_id", "poskytovatel_nazev", "segmenty", "obchodni_skore_0_100", "priorita"];
@@ -69,6 +82,7 @@ const leads = rows.map((row) => {
   if (seen.has(id)) throw new Error(`Duplicitní ID místa NRPZS: ${id}`);
   seen.add(id);
   const segments = row[at.segmenty].split("|").filter(Boolean);
+  const hours = openingHoursByPlace[id] || {};
   return {
     id,
     sourceLeadId: row[at.lead_id],
@@ -82,7 +96,11 @@ const leads = rows.map((row) => {
     address: [row[at.adresa], row[at.psc], row[at.mesto]].filter(Boolean).join(" "),
     phone: cleanPhone(row[at.telefon]),
     email: row[at.email]?.trim() || "",
-    web: row[at.web]?.trim() || "",
+    web: canonicalUrl(row[at.web]?.trim() || ""),
+    webStatus: row[at.web_stav] || "",
+    onlineBooking: row[at.online_objednani] || "Neověřeno",
+    bookingSystem: row[at.objednavaci_system] || "",
+    patientPortal: row[at.pacientsky_portal_formulare] || "Neověřeno",
     representative: row[at.odborny_zastupce]?.replace(/\s+/g, " ").trim() || "",
     targetType: row[at.typ_cile] || "",
     digitalScore: number(row[at.digitalni_skore_0_10]),
@@ -97,9 +115,13 @@ const leads = rows.map((row) => {
     contactConfidence: row[at.kontakt_jistota] || "",
     researchStatus: row[at.research_stav] || "",
     acceptsNewPatients: row[at.prijima_nove_pacienty] || "Nedohledáno",
-    mapProfileUrl: row[at.mapy_firmy_url] || "",
+    mapProfileUrl: canonicalUrl(row[at.mapy_firmy_url] || ""),
     googleMapsUrl: row[at.google_maps_hledani] || "",
     auditedAt: row[at.overeno_dne] || "",
+    openingHours: hours.schedule || { mon: [], tue: [], wed: [], thu: [], fri: [], sat: [], sun: [] },
+    openingHoursSource: hours.sourceUrl || "",
+    openingHoursConfidence: hours.confidence || "C",
+    openingHoursAuditedAt: hours.auditedAt || "",
     status: "Nevoláno",
     notes: "",
     nextFollowUp: "",

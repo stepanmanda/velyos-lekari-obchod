@@ -6,6 +6,7 @@ Interní volací kokpit pro nabídku digitální identity ordinacím a navazují
 
 - 404 auditovaných míst péče: praktici, pediatři, gynekologové, stomatologové a ortodontisté z NRPZS,
 - digitální skóre, obchodní priorita a doporučená nabídka z veřejného auditu,
+- město, adresa a veřejně dohledané ordinační hodiny s odkazem na zdroj,
 - scénář hovoru upravený podle oboru,
 - evidence výsledku, poznámek, follow-upů a schůzek,
 - lokální ukládání dat v prohlížeči,
@@ -20,6 +21,7 @@ GitHub Pages nemá databázi. Historie hovorů a poznámky proto zůstávají v 
 
 ```bash
 npm install
+python3 scripts/enrich-opening-hours.py
 npm run prepare:leads
 npm run dev
 ```
@@ -32,3 +34,4 @@ Workflow `.github/workflows/deploy-pages.yml` sestaví web po každém pushi do 
 
 Vstupní CSV: `../outputs/kv-lekari-karlovarsky-kraj-2026-08-03/kv_lekari_digitalni_audit_2026-08-03.csv`.
 Generátor přebírá všech 404 auditovaných míst péče. Primární deduplikační klíč je `misto_id` z NRPZS; stejné IČO na více adresách zůstává záměrně jako více provozoven.
+Ordinační hodiny jsou uloženy v `data/opening-hours.json`. Zobrazují se pouze při jednoznačném spárování veřejného profilu nebo strukturovaných dat vlastního webu; jinak aplikace uvádí `Nedohledáno`.

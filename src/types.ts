@@ -1,5 +1,6 @@
 export type Specialty = "Praktik" | "Pediatrie" | "Gynekologie" | "Stomatologie";
 export type LeadPriority = "A" | "B" | "C";
+export type OpeningHours = Record<"mon" | "tue" | "wed" | "thu" | "fri" | "sat" | "sun", string[]>;
 
 export type LeadStatus =
   | "Nevoláno"
@@ -35,6 +36,10 @@ export type Lead = {
   phone: string;
   email: string;
   web: string;
+  webStatus: string;
+  onlineBooking: string;
+  bookingSystem: string;
+  patientPortal: string;
   representative: string;
   targetType: string;
   digitalScore: number;
@@ -52,6 +57,10 @@ export type Lead = {
   mapProfileUrl: string;
   googleMapsUrl: string;
   auditedAt: string;
+  openingHours: OpeningHours;
+  openingHoursSource: string;
+  openingHoursConfidence: string;
+  openingHoursAuditedAt: string;
   status: LeadStatus;
   notes: string;
   nextFollowUp: string;

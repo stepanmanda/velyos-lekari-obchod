@@ -105,16 +105,18 @@ h1, h2, h3 { font-family: "Manrope", sans-serif; margin-top: 0; color: var(--ink
 .lead-overview span { color: var(--muted); font-size: 10px; }
 .leads-table-wrap { background: var(--paper); border: 1px solid var(--line); overflow-x: auto; }
 .leads-table { width: 100%; border-collapse: collapse; min-width: 1320px; table-layout: fixed; }
-.col-practice { width: 15%; }
+.col-practice { width: 14%; }
 .col-location { width: 13%; }
-.col-contact { width: 13%; }
+.col-contact { width: 12%; }
 .col-hours { width: 14%; }
 .col-digital { width: 13%; }
-.col-opportunity { width: 15%; }
+.col-opportunity { width: 14%; }
 .col-crm { width: 13%; }
-.col-action { width: 4%; }
+.col-action { width: 7%; }
 .leads-table th { padding: 13px 16px; text-align: left; color: #7c857e; font-size: 9px; text-transform: uppercase; letter-spacing: .12em; background: #ebeae4; }
 .leads-table td { padding: 15px 16px; border-top: 1px solid #e5e5df; font-size: 12px; vertical-align: top; overflow: hidden; }
+.leads-table th:last-child, .leads-table td:last-child { padding-left: 8px; padding-right: 8px; text-align: center; }
+.leads-table td:last-child .call-button { width: 100%; min-width: 0; padding: 8px 6px; white-space: nowrap; }
 .leads-table td strong, .leads-table td span { display: block; }
 .leads-table td > span, .leads-table td > a + span { margin-top: 4px; color: var(--muted); font-size: 10px; overflow: hidden; text-overflow: ellipsis; line-height: 1.4; }
 .leads-table a { color: var(--green); text-decoration: none; }

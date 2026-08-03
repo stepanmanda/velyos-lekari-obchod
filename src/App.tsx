@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 import { forbiddenClaims, objections, specialtyCopy } from "./content";
-import type { CallLog, Lead, LeadPriority, LeadStatus, Specialty } from "./types";
+import type { CallLog, CallScript, Lead, LeadPriority, LeadStatus, OfferMode, Specialty } from "./types";
 
 type Page = "dashboard" | "leads" | "playbook" | "offer";
 type LeadSort = "score" | "city" | "webOpportunity" | "followUp";
@@ -38,6 +38,8 @@ function mergeCanonicalLeads(canonical: Lead[], saved: Lead[] = []) {
       lastContact: previous.lastContact || "",
       attempts: Number(previous.attempts) || 0,
       logs: Array.isArray(previous.logs) ? previous.logs : [],
+      offerMode: previous.offerMode || "auto",
+      scriptOverrides: previous.scriptOverrides || {},
     } : lead);
   }
   return Array.from(unique.values());
@@ -121,6 +123,55 @@ function pilotSentence() {
   return new Date() < launch
     ? "První pilotní implementaci spouštíme 10. 8. 2026 v M3 MEDIC."
     : "První pilotní implementaci jsme zahájili 10. 8. 2026 v M3 MEDIC.";
+}
+
+const offerModeLabels: Record<OfferMode, string> = {
+  auto: "Podle auditu",
+  web: "Pouze web",
+  medvision: "Pouze MEDVISION",
+  web_medvision: "Web + MEDVISION",
+};
+
+function recommendedOfferMode(lead: Lead): Exclude<OfferMode, "auto"> {
+  const offer = lead.recommendedOffer.toLocaleLowerCase("cs");
+  if (offer.includes("medvision") && offer.includes("web")) return "web_medvision";
+  if (offer.includes("medvision")) return "medvision";
+  return "web";
+}
+
+function effectiveOfferMode(lead: Lead, selected: OfferMode): Exclude<OfferMode, "auto"> {
+  return selected === "auto" ? recommendedOfferMode(lead) : selected;
+}
+
+function defaultCallScript(lead: Lead, caller: string, selected: OfferMode): CallScript {
+  const copy = specialtyCopy[lead.specialty];
+  const mode = effectiveOfferMode(lead, selected);
+  const name = caller || "[jméno]";
+  const close = `Dává vám smysl, abychom si na 20 minut sedli a podívali se konkrétně na vaši ordinaci? Můžeme osobně, nebo online. Vyhovuje vám víc začátek, nebo konec příštího týdne?`;
+  if (mode === "medvision") return {
+    gatekeeper: `Dobrý den, tady ${name} z VELYOS. Volám krátce kvůli tomu, jak ordinace řeší objednávání a opakované administrativní požadavky. Mohl bych prosím mluvit s člověkem, který má provoz ordinace na starosti?`,
+    intro: `Dobrý den, tady ${name} z VELYOS. Budu stručný. Nevolám s hotovým univerzálním systémem — ověřujeme s ordinacemi, kde dnes vzniká nejvíc telefonní a administrativní zátěže a zda by tam MEDVISION dával smysl.`,
+    questions: copy.medvisionQuestions,
+    value: `Jestli tomu správně rozumím, nejvíc vás dnes trápí [zopakuj jeho slova]. ${copy.medvision} ${pilotSentence()} Na krátké ukázce bychom ověřili, zda je pro váš provoz relevantní.`,
+    close,
+    finalNote: "MEDVISION prezentuj jako pilot a discovery. Neslibuj hotové nasazení, konkrétní úsporu času ani automatické klinické rozhodování.",
+  };
+  if (mode === "web_medvision") return {
+    gatekeeper: `Dobrý den, tady ${name} z VELYOS. Volám krátce kvůli webu ordinace a možnosti zjednodušit opakovanou komunikaci s pacienty. Mohl bych prosím mluvit s člověkem, který řeší web nebo provoz ordinace?`,
+    intro: `Dobrý den, tady ${name} z VELYOS. Budu stručný. ${copy.hook} Vedle webu ověřujeme s ordinacemi také administrativní workflow pro MEDVISION. Nechci vám po telefonu nic prodávat — chci zjistit, která z těch oblastí je pro vás skutečně relevantní.`,
+    questions: [copy.questions[0], copy.questions[1], copy.medvisionQuestions[0], copy.medvisionQuestions[1]],
+    value: `Jestli tomu správně rozumím, nejvíc vás dnes trápí [zopakuj jeho slova]. ${copy.value} Kompletní web držíme do 50 tisíc korun; doména a hosting jsou zvlášť. Pokud je problém také v administrativě, ${copy.medvision.toLocaleLowerCase("cs")} ${pilotSentence()}`,
+    close,
+    finalNote: "Nejdřív potvrď hlavní problém. Nabídni web, MEDVISION nebo obojí podle odpovědí — neprezentuj balíček jako povinnou kombinaci.",
+  };
+  return {
+    gatekeeper: `Dobrý den, tady ${name} z VELYOS. Volám krátce kvůli webovým stránkám ordinace. Mohl bych prosím mluvit s panem doktorem / paní doktorkou, případně s člověkem, který řeší web?`,
+    intro: `Dobrý den, tady ${name} z VELYOS. Budu stručný. ${copy.hook} Nechci vám po telefonu nic prodávat — chci jen zjistit, jestli stojí za to domluvit krátkou schůzku.`,
+    questions: copy.questions,
+    value: `Jestli tomu správně rozumím, nejvíc vás dnes trápí [zopakuj jeho slova]. ${copy.value} Kompletní řešení držíme do 50 tisíc korun; doména a hosting jsou zvlášť.`,
+    close,
+    finalNote: "Drž se nabídky webu. MEDVISION zmiň jen tehdy, když se klient sám otevře tématu administrativy nebo objednávání.",
+  };
 }
 
 function App() {
@@ -233,6 +284,12 @@ function App() {
     window.setTimeout(() => setDataNotice(""), 3500);
   }
 
+  function updateLead(updated: Lead, message: string) {
+    setLeads((current) => current.map((lead) => (lead.id === updated.id ? updated : lead)));
+    setDataNotice(message);
+    window.setTimeout(() => setDataNotice(""), 3500);
+  }
+
   function exportData() {
     const payload = {
       exportedAt: new Date().toISOString(),
@@ -249,9 +306,9 @@ function App() {
   }
 
   function exportCsv() {
-    const columns = ["ID NRPZS", "Ordinace", "Obor", "Segmenty", "Město", "Adresa", "Ordinační hodiny", "Zdroj hodin", "Telefon", "E-mail", "Web", "Stav webu", "Online objednání", "Objednávací systém", "Pacientský portál", "Přijímá nové pacienty", "Priorita", "Obchodní skóre", "Web příležitost", "MEDVISION fit", "Doporučená nabídka", "Stav", "Pokusy", "Poslední kontakt", "Další krok", "Poznámky"];
+    const columns = ["ID NRPZS", "Ordinace", "Obor", "Segmenty", "Město", "Adresa", "Ordinační hodiny", "Zdroj hodin", "Telefon", "E-mail", "Web", "Stav webu", "Online objednání", "Objednávací systém", "Pacientský portál", "Přijímá nové pacienty", "Priorita", "Obchodní skóre", "Web příležitost", "MEDVISION fit", "Doporučená nabídka", "Zvolený scénář", "Stav", "Pokusy", "Poslední kontakt", "Další krok", "Poznámky"];
     const quote = (value: unknown) => `"${String(value ?? "").replaceAll('"', '""')}"`;
-    const rows = leads.map((lead) => [lead.id, lead.name, lead.specialty, lead.segments.join("|"), lead.city, lead.address, weeklyOpeningHours(lead), lead.openingHoursSource, lead.phone, lead.email, lead.web, lead.webStatus, lead.onlineBooking, lead.bookingSystem, lead.patientPortal, lead.acceptsNewPatients, lead.priority, lead.commercialScore, lead.webOpportunityScore, lead.medvisionFitScore, lead.recommendedOffer, lead.status, lead.attempts, lead.lastContact, lead.nextFollowUp, lead.notes]);
+    const rows = leads.map((lead) => [lead.id, lead.name, lead.specialty, lead.segments.join("|"), lead.city, lead.address, weeklyOpeningHours(lead), lead.openingHoursSource, lead.phone, lead.email, lead.web, lead.webStatus, lead.onlineBooking, lead.bookingSystem, lead.patientPortal, lead.acceptsNewPatients, lead.priority, lead.commercialScore, lead.webOpportunityScore, lead.medvisionFitScore, lead.recommendedOffer, offerModeLabels[effectiveOfferMode(lead, lead.offerMode || "auto")], lead.status, lead.attempts, lead.lastContact, lead.nextFollowUp, lead.notes]);
     const csv = `\uFEFF${[columns, ...rows].map((row) => row.map(quote).join(",")).join("\n")}`;
     const blob = new Blob([csv], { type: "text/csv;charset=utf-8" });
     const url = URL.createObjectURL(blob);
@@ -345,7 +402,7 @@ function App() {
         )}
       </main>
 
-      {activeLead && <CallWorkspace lead={activeLead} caller={profileName} onClose={() => setActiveLeadId(null)} onSave={saveLead} />}
+      {activeLead && <CallWorkspace lead={activeLead} caller={profileName} onClose={() => setActiveLeadId(null)} onSave={saveLead} onUpdate={updateLead} />}
     </div>
   );
 }
@@ -477,14 +534,44 @@ function StatusPill({ status }: { status: LeadStatus }) {
   return <span className={`status status-${status.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").replaceAll(" ", "-")}`}>{status}</span>;
 }
 
-function CallWorkspace({ lead, caller, onClose, onSave }: { lead: Lead; caller: string; onClose: () => void; onSave: (lead: Lead) => void }) {
+function CallWorkspace({ lead, caller, onClose, onSave, onUpdate }: { lead: Lead; caller: string; onClose: () => void; onSave: (lead: Lead) => void; onUpdate: (lead: Lead, message: string) => void }) {
   const [outcome, setOutcome] = useState<LeadStatus>(lead.status === "Nevoláno" ? "Nedovoláno" : lead.status);
   const [note, setNote] = useState(lead.notes);
   const [followUp, setFollowUp] = useState(() => lead.nextFollowUp || dateTimeLocal(new Date(Date.now() + 2 * 86_400_000)));
   const [meetingAt, setMeetingAt] = useState(lead.meetingAt);
   const [channel, setChannel] = useState<"Osobně" | "Online">(lead.meetingChannel || "Online");
   const [tab, setTab] = useState<"script" | "record" | "history">("script");
-  const copy = specialtyCopy[lead.specialty];
+  const [offerMode, setOfferMode] = useState<OfferMode>(lead.offerMode || "auto");
+  const [scriptOverrides, setScriptOverrides] = useState<Lead["scriptOverrides"]>(lead.scriptOverrides || {});
+  const [editingScript, setEditingScript] = useState(false);
+  const defaultScript = useMemo(() => defaultCallScript(lead, caller, offerMode), [lead, caller, offerMode]);
+  const currentOverrides = scriptOverrides[offerMode] || {};
+  const callScript: CallScript = {
+    ...defaultScript,
+    ...currentOverrides,
+    questions: currentOverrides.questions || defaultScript.questions,
+  };
+  const effectiveMode = effectiveOfferMode(lead, offerMode);
+
+  function updateScriptField<K extends keyof CallScript>(field: K, value: CallScript[K]) {
+    setScriptOverrides((current) => ({
+      ...current,
+      [offerMode]: { ...(current[offerMode] || {}), [field]: value },
+    }));
+  }
+
+  function saveScriptSettings() {
+    onUpdate({ ...lead, offerMode, scriptOverrides }, `Scénář „${offerModeLabels[effectiveMode]}“ je uložený pro tuto ordinaci.`);
+    setEditingScript(false);
+  }
+
+  function resetScriptSettings() {
+    setScriptOverrides((current) => {
+      const next = { ...current };
+      delete next[offerMode];
+      return next;
+    });
+  }
 
   function submit() {
     const at = new Date().toISOString();
@@ -499,6 +586,8 @@ function CallWorkspace({ lead, caller, onClose, onSave }: { lead: Lead; caller: 
       lastContact: at,
       attempts: lead.attempts + 1,
       logs: [log, ...lead.logs],
+      offerMode,
+      scriptOverrides,
     });
   }
 
@@ -519,31 +608,47 @@ function CallWorkspace({ lead, caller, onClose, onSave }: { lead: Lead; caller: 
           {tab === "script" && (
             <div className="script-grid">
               <div className="script-flow">
+                <section className="script-strategy">
+                  <div><p className="eyebrow">STRATEGIE NABÍDKY</p><h3>{offerModeLabels[effectiveMode]}</h3><p>Audit doporučuje: <strong>{offerModeLabels[recommendedOfferMode(lead)]}</strong> · {lead.recommendedOffer}</p></div>
+                  <div className="strategy-actions">
+                    <label><span>Scénář pro tento kontakt</span><select value={offerMode} onChange={(event) => setOfferMode(event.target.value as OfferMode)}><option value="auto">Podle auditu ({offerModeLabels[recommendedOfferMode(lead)]})</option><option value="web">Pouze web</option><option value="medvision">Pouze MEDVISION</option><option value="web_medvision">Web + MEDVISION</option></select></label>
+                    <button className="ghost-button" onClick={() => setEditingScript((value) => !value)}>{editingScript ? "Zavřít úpravy" : "Upravit texty"}</button>
+                    <button className="primary-button" onClick={saveScriptSettings}>Uložit scénář</button>
+                  </div>
+                  {editingScript && <div className="script-editor">
+                    <label><span>01 · Sestra / recepce</span><textarea rows={4} value={callScript.gatekeeper} onChange={(event) => updateScriptField("gatekeeper", event.target.value)} /></label>
+                    <label><span>02 · Úvod lékaři</span><textarea rows={5} value={callScript.intro} onChange={(event) => updateScriptField("intro", event.target.value)} /></label>
+                    <label className="wide"><span>03 · Otázky — jedna na řádek</span><textarea rows={6} value={callScript.questions.join("\n")} onChange={(event) => updateScriptField("questions", event.target.value.split("\n").map((value) => value.trim()).filter(Boolean))} /></label>
+                    <label><span>04 · Hodnota nabídky</span><textarea rows={6} value={callScript.value} onChange={(event) => updateScriptField("value", event.target.value)} /></label>
+                    <label><span>05 · Domluvení schůzky</span><textarea rows={5} value={callScript.close} onChange={(event) => updateScriptField("close", event.target.value)} /></label>
+                    <label className="wide"><span>06 · Poznámka / hranice nabídky</span><textarea rows={4} value={callScript.finalNote} onChange={(event) => updateScriptField("finalNote", event.target.value)} /></label>
+                    <div className="script-editor-actions"><button className="text-button" onClick={resetScriptSettings}>Obnovit výchozí text pro tuto variantu</button><span>Vlastní texty se ukládají pouze pro tuto ordinaci a zvolenou variantu.</span></div>
+                  </div>}
+                </section>
                 <ScriptStep number="01" title="Když zvedne sestra / recepce">
-                  <blockquote>„Dobrý den, tady {caller || "[jméno]"} z VELYOS. Volám krátce kvůli webovým stránkám ordinace. Mohl bych prosím mluvit s panem doktorem / paní doktorkou, případně s člověkem, který řeší web?“</blockquote>
-                  <p>Když se zeptá proč: <strong>„Připravujeme ordinacím kompletní nový web včetně vlastní vizuální identity. Potřebuji jen zjistit, zda je to u vás vůbec aktuální téma.“</strong></p>
+                  <blockquote>„{callScript.gatekeeper}“</blockquote>
                 </ScriptStep>
                 <ScriptStep number="02" title="Prvních 20 sekund s lékařem">
-                  <blockquote>„Dobrý den, pane doktore / paní doktorko, tady {caller || "[jméno]"} z VELYOS. Budu stručný. {copy.hook} Nechci vám po telefonu nic prodávat — chci jen zjistit, jestli stojí za to domluvit krátkou schůzku.“</blockquote>
+                  <blockquote>„{callScript.intro}“</blockquote>
                 </ScriptStep>
                 <ScriptStep number="03" title="Ptej se a poslouchej">
-                  <div className="question-list">{copy.questions.map((question) => <button key={question} onClick={() => navigator.clipboard?.writeText(question)}>{question}<span>zkopírovat</span></button>)}</div>
+                  <div className="question-list">{callScript.questions.map((question) => <button key={question} onClick={() => navigator.clipboard?.writeText(question)}>{question}<span>zkopírovat</span></button>)}</div>
                   <p className="tip">Použij 2–3 otázky. Po odpovědi se doptávej. Klient má mluvit víc než ty.</p>
                 </ScriptStep>
                 <ScriptStep number="04" title="Propoj problém s nabídkou">
-                  <blockquote>„Jestli tomu správně rozumím, nejvíc vás dnes trápí <mark>[zopakuj jeho slova]</mark>. Přesně na to bychom se podívali. {copy.value} Kompletní řešení držíme do 50 tisíc korun; doména a hosting jsou zvlášť.“</blockquote>
+                  <blockquote>„{callScript.value}“</blockquote>
                 </ScriptStep>
                 <ScriptStep number="05" title="Domluv schůzku">
-                  <blockquote>„Dává vám smysl, abychom si na 20 minut sedli a podívali se konkrétně na vaši ordinaci? Můžeme osobně, nebo online. Vyhovuje vám víc začátek, nebo konec příštího týdne?“</blockquote>
+                  <blockquote>„{callScript.close}“</blockquote>
                   <p>Neptej se jen „máte zájem?“. Nabídni dvě jednoduché možnosti.</p>
                 </ScriptStep>
-                <ScriptStep number="06" title="MEDVISION — až jako doplněk">
-                  <blockquote>„Ještě jedna věc, která by pro vás mohla být do budoucna zajímavá. {copy.medvision} {pilotSentence()} Zájemcům dnes nabízíme přední místo v dalším pilotu. Na schůzce vám můžeme ukázat, kam projekt směřuje.“</blockquote>
+                <ScriptStep number="06" title="Hranice zvolené nabídky">
+                  <p className="script-final-note">{callScript.finalNote}</p>
                 </ScriptStep>
               </div>
               <aside className="lead-card">
                 <p className="eyebrow">KONTAKT · PRIORITA {lead.priority}</p><h3>{lead.provider}</h3>
-                <div className="lead-recommendation"><strong>{lead.recommendedOffer}</strong><span>{lead.recommendedNextStep}</span></div>
+                <div className="lead-recommendation"><strong>{lead.recommendedOffer}</strong><span>Zvolený scénář: {offerModeLabels[effectiveMode]}</span><span>{lead.recommendedNextStep}</span></div>
                 <dl><dt>Obor</dt><dd>{lead.specialty} <small>({lead.segments.join(" · ")})</small></dd><dt>Město</dt><dd>{lead.city}</dd><dt>Hodiny</dt><dd>{hasOpeningHours(lead) ? <><strong>{todayOpeningHours(lead)}</strong><small className="weekly-hours">{weeklyOpeningHours(lead)}</small></> : "Nedohledány"}</dd><dt>Zástupce</dt><dd>{lead.representative || "Neznámý"}</dd><dt>Skóre</dt><dd><strong>{lead.commercialScore}/100</strong> · digitální {lead.digitalScore}/10</dd><dt>Web</dt><dd>{lead.web ? <><a href={websiteUrl(lead.web)} target="_blank" rel="noreferrer">Otevřít web ↗</a><small className="weekly-hours">{lead.webStatus}</small></> : <strong className="opportunity">Vlastní web nenalezen</strong>}</dd><dt>Objednání</dt><dd>{lead.onlineBooking}{lead.bookingSystem ? ` · ${lead.bookingSystem}` : ""}</dd><dt>Portál</dt><dd>{lead.patientPortal}</dd><dt>Noví pacienti</dt><dd>{lead.acceptsNewPatients}</dd><dt>Jistota</dt><dd>{lead.contactConfidence}</dd><dt>E-mail</dt><dd>{lead.email || "—"}</dd><dt>Mapy</dt><dd>{lead.googleMapsUrl ? <a href={lead.googleMapsUrl} target="_blank" rel="noreferrer">Otevřít hledání ↗</a> : "—"}</dd><dt>Pokusy</dt><dd>{lead.attempts}</dd></dl>
                 <button className="primary-button full" onClick={() => setTab("record")}>Zapsat výsledek →</button>
               </aside>

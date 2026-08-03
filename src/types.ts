@@ -1,6 +1,15 @@
 export type Specialty = "Praktik" | "Pediatrie" | "Gynekologie" | "Stomatologie";
 export type LeadPriority = "A" | "B" | "C";
 export type OpeningHours = Record<"mon" | "tue" | "wed" | "thu" | "fri" | "sat" | "sun", string[]>;
+export type OfferMode = "auto" | "web" | "medvision" | "web_medvision";
+export type CallScript = {
+  gatekeeper: string;
+  intro: string;
+  questions: string[];
+  value: string;
+  close: string;
+  finalNote: string;
+};
 
 export type LeadStatus =
   | "Nevoláno"
@@ -61,6 +70,8 @@ export type Lead = {
   openingHoursSource: string;
   openingHoursConfidence: string;
   openingHoursAuditedAt: string;
+  offerMode: OfferMode;
+  scriptOverrides: Partial<Record<OfferMode, Partial<CallScript>>>;
   status: LeadStatus;
   notes: string;
   nextFollowUp: string;

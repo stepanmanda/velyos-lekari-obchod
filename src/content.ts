@@ -4,6 +4,7 @@ export const specialtyCopy: Record<Specialty, {
   hook: string;
   value: string;
   questions: string[];
+  medvisionQuestions: string[];
   medvision: string;
 }> = {
   Praktik: {
@@ -14,6 +15,12 @@ export const specialtyCopy: Record<Specialty, {
       "Kvůli kterým informacím pacienti nejčastěji volají?",
       "Mohou dnes pacienti jednoduše požádat o termín nebo vám poslat požadavek?",
       "Kdyby nový web vyřešil jednu věc opravdu dobře, co by to mělo být?",
+    ],
+    medvisionQuestions: [
+      "Které telefonáty a administrativní požadavky dnes nejvíc zatěžují sestru?",
+      "Jak dnes přijímáte žádosti o recept, objednání nebo potvrzení?",
+      "Používáte jeden systém, nebo se požadavky sbíhají z telefonu, e-mailu a formulářů?",
+      "Kde dnes nejčastěji vzniká zdržení nebo nutnost něco přepisovat?",
     ],
     medvision: "U praktiků navíc připravujeme MEDVISION — lokálního digitálního asistenta ordinace pro objednávání, příjem požadavků, připomínky a přehled dne. Citlivé zpracování běží přímo v ordinaci a člověk má vždy poslední slovo.",
   },
@@ -26,6 +33,12 @@ export const specialtyCopy: Record<Specialty, {
       "Umíte na web rychle přidat dovolenou nebo změnu ordinační doby?",
       "Kdyby nový web ubral jednu opakovanou agendu, která by to byla?",
     ],
+    medvisionQuestions: [
+      "Které požadavky rodičů nejčastěji přicházejí telefonicky?",
+      "Jak dnes třídíte objednání, recepty, potvrzení a akutní dotazy?",
+      "Kolik komunikačních kanálů musí sestra během dne sledovat?",
+      "Kterou opakovanou administrativu by dávalo největší smysl zjednodušit?",
+    ],
     medvision: "U dětských praktiků ověřujeme MEDVISION jako navazující variantu pro objednávání, příjem administrativních požadavků a přehled komunikace. Nejdřív potřebujeme pochopit konkrétní workflow ordinace a rodičů.",
   },
   Gynekologie: {
@@ -37,6 +50,12 @@ export const specialtyCopy: Record<Specialty, {
       "Které opakované dotazy dnes nejvíc zatěžují telefon?",
       "Je pro vás důležitější modernější prezentace, nebo snížení administrativy?",
     ],
+    medvisionQuestions: [
+      "Jak dnes rozlišujete objednání, administrativní požadavky a akutní dotazy pacientek?",
+      "Které typy telefonátů se během dne nejčastěji opakují?",
+      "Kde by automatizace musela respektovat specifické workflow vaší ordinace?",
+      "Co musí vždy zůstat pod přímou kontrolou sestry nebo lékaře?",
+    ],
     medvision: "Vedle webů vyvíjíme MEDVISION. Pro specialisty připravujeme možnost přizpůsobit objednávání, požadavky a připomínky jejich konkrétnímu provozu. Dnes nabízíme přední místo mezi zájemci o pilot, ne hotové nasazení pro gynekologii.",
   },
   Stomatologie: {
@@ -47,6 +66,12 @@ export const specialtyCopy: Record<Specialty, {
       "Najde pacient snadno, zda přijímáte nové pacienty a jak se objednat?",
       "Kolik času zabírají opakované telefonáty o termíny a praktické informace?",
       "Které služby byste chtěli na webu prezentovat lépe?",
+    ],
+    medvisionQuestions: [
+      "Jak dnes řešíte nové objednávky, změny termínů a připomínky?",
+      "Které telefonáty se recepci nejčastěji opakují?",
+      "Používáte pro komunikaci s pacienty jeden systém, nebo více kanálů?",
+      "Kde by digitální asistent musel respektovat specifika stomatologického provozu?",
     ],
     medvision: "Vedle webů vyvíjíme MEDVISION. Pro stomatologii může časem pomoci s objednáváním, připomínkami a tříděním administrativních požadavků. Dnes nabízíme přední místo mezi zájemci o pilot, ne hotový stomatologický systém.",
   },

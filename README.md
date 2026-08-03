@@ -8,6 +8,7 @@ Interní volací kokpit pro nabídku digitální identity ordinacím a navazují
 - digitální skóre, obchodní priorita a doporučená nabídka z veřejného auditu,
 - město, adresa a veřejně dohledané ordinační hodiny s odkazem na zdroj,
 - scénář hovoru upravený podle oboru,
+- individuální strategie `Pouze web`, `Pouze MEDVISION` nebo `Web + MEDVISION` s editovatelnými texty pro každou ordinaci,
 - evidence výsledku, poznámek, follow-upů a schůzek,
 - lokální ukládání dat v prohlížeči,
 - export do CSV a záloha/obnova přes JSON,

@@ -122,6 +122,8 @@ const leads = rows.map((row) => {
     openingHoursSource: hours.sourceUrl || "",
     openingHoursConfidence: hours.confidence || "C",
     openingHoursAuditedAt: hours.auditedAt || "",
+    offerMode: "auto",
+    scriptOverrides: {},
     status: "Nevoláno",
     notes: "",
     nextFollowUp: "",
